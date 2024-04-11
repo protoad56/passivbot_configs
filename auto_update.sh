@@ -5,7 +5,7 @@ set -x
 TG_TOKEN="6120796421:AAEmms06XosOiABi3L2gc-utFYyNPb79Gnw"
 TG_CHAT_ID="6757461113"
 
-ROOT_PATH="/Users/att"
+ROOT_PATH="/root"
 CFG_DIR="${ROOT_PATH}/passivbot_configs"
 PASSIVBOT_DIR="${ROOT_PATH}/passivbot/"
 
