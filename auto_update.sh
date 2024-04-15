@@ -104,6 +104,6 @@ if [ "$latest_commit" != "$current_commit" ]; then
             fi
         done
 
-        copy_if_newer att_backtest_result.csv "$PASSIVBOT_DIR/att_backtest_result.csv"
+        copy_if_newer backtest_result.csv "$PASSIVBOT_DIR/att_backtest_result.csv"
 
 fi
