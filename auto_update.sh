@@ -104,6 +104,10 @@ if [ "$latest_commit" != "$current_commit" ]; then
             fi
         done
 
-        copy_if_newer backtest_result.csv "$PASSIVBOT_DIR/att_backtest_result.csv"
+        # Special case to copy backtest_result.csv to a specific location with a new name
+        if [ -f "backtest_result.csv" ]; then
+            copy_if_newer "backtest_result.csv" "$PASSIVBOT_DIR/att_backtest_result.csv"
+        fi
+
 
 fi
