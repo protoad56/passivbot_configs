@@ -16,7 +16,7 @@ source_folder="${ROOT_PATH}/passivbot_configs/optimized"
 destination_folder="${ROOT_PATH}/passivbot/configs/live/forager/live"  
 
 # Define the path to the lock file
-lock_file="${PASSIVBOT_DIR}/passivbot/configs/forager/forager_lock.json"
+lock_file="${PASSIVBOT_DIR}/configs/forager/forager_lock.json"
 
 cd $CFG_DIR
 
