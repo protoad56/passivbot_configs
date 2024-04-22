@@ -21,6 +21,7 @@ def export_data_to_csv(db_path, output_csv_path):
 
     # Pivot the DataFrame so that each symbol becomes a column
     pivot_df = df.pivot(index='Date', columns='symbol', values='TotalBalance')
+    pivot_df = df.rename(columns={"Date":"date"})
     pivot_df.fillna(0, inplace=True)  # Fill missing values with 0
     
     for column in pivot_df.columns:
