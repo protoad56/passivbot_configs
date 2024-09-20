@@ -1,0 +1,52 @@
+name: Execute Backtest
+
+on:
+  push:
+    branches:
+      - main  # Adjust the branch as necessary
+
+jobs:
+  backtest_job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Enables the workflow to commit files back to the repository
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Checkout External Repository
+      uses: actions/checkout@v3
+      with:
+        repository: enarjord/passivbot
+        path: external-repo  # Clones the external repo to a directory named external-repo
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'  # Specify your required Python version
+
+    - name: Install Dependencies from External Repository
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools  # Install or upgrade setuptools
+        pip install -r external-repo/requirements.txt  # Install dependencies from requirements.txt
+
+    - name: Configure API Credentials
+      run: |
+        echo "Modifying api-config.json with provided secrets"
+        python -c "import json; \
+                   path = 'external-repo/api-config.json'; \
+                   with open(path, 'r') as file: \
+                       config = json.load(file); \
+                   config['binance_01']['key'] = '${{ secrets.USERNAME }}'; \
+                   config['binance_01']['secret'] = '${{ secrets.PASSWORD }}'; \
+                   with open(path, 'w') as file: \
+                       json.dump(config, file, indent=4)"
+      shell: bash
+
+    - name: Run Backtest.py
+      run: python external-repo/backtest.py  # Path to backtest.py in the cloned repo
+      shell: bash
+
+

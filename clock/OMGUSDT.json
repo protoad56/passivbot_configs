@@ -1,0 +1,43 @@
+{
+    "config_name": "clock_0days",
+    "long": {
+        "backwards_tp": true,
+        "delay_between_fills_minutes_close": 448.2092227561286,
+        "delay_between_fills_minutes_entry": 421.82625150788675,
+        "delay_weight_close": 83.6697852869748,
+        "delay_weight_entry": 22.65526980472852,
+        "ema_dist_close": -0.24167459181982362,
+        "ema_dist_entry": 0.006270497124069499,
+        "ema_span_0": 1340.6232643123706,
+        "ema_span_1": 211.3517603703626,
+        "enabled": true,
+        "markup_range": 0.026211000581385393,
+        "min_markup": 0.009088928340837472,
+        "n_close_orders": 5,
+        "qty_pct_close": 0.01382387816301345,
+        "qty_pct_entry": 0.011017143869116754,
+        "wallet_exposure_limit": 0.3,
+        "we_multiplier_close": 0,
+        "we_multiplier_entry": 131.61578056693895
+    },
+    "short": {
+        "backwards_tp": true,
+        "delay_between_fills_minutes_close": 1350.4944550800826,
+        "delay_between_fills_minutes_entry": 148.25612255587873,
+        "delay_weight_close": 81.40989169865331,
+        "delay_weight_entry": 12.74100004425152,
+        "ema_dist_close": -0.0013209271760803135,
+        "ema_dist_entry": -0.0019234139714162368,
+        "ema_span_0": 250.5903284781598,
+        "ema_span_1": 196.6490081367495,
+        "enabled": true,
+        "markup_range": 0.005748433717329186,
+        "min_markup": 0.003870389867844866,
+        "n_close_orders": 2,
+        "qty_pct_close": 0.022338256370162783,
+        "qty_pct_entry": 0.010273702499073147,
+        "wallet_exposure_limit": 1,
+        "we_multiplier_close": 0,
+        "we_multiplier_entry": 36.08447240724606
+    }
+}
