@@ -15,7 +15,7 @@
         "base_dir": "backtests",
         "end_date": "now",
         "exchange": "binance",
-        "start_date": "2021-05-01",
+        "start_date": "2023-11-01",
         "starting_balance": 100000,
         "symbols": [
             "DOGEUSDT"
