@@ -77,52 +77,51 @@
         ],
         "symbol_config_template": {
             "exchange_leverage": 50,
-            {
-                "long": {
-                  "enabled": true,
-                  "strategy": "FastCatcherLongStrategy",
-                  "tick_execution_interval_ms": 100,  // Set to 100ms for high-frequency execution to react quickly to tick data changes
-                  "mode": "NORMAL",
-                  "wallet_exposure_ratio": 0.02,  // Limits exposure to 2% of the wallet balance to manage risk in volatile conditions
-                  "strategy_config": {
-                    // Entry Conditions Based on Tick Data
-                    "minimum_nr_ticks_threshold": 50,  // Requires at least 50 ticks in the lookback period to consider entry, ensuring sufficient market activity
-                    "price_diff_pct_threshold": 0.5,  // Triggers entry when there's at least a 0.5% increase in price, indicating significant upward movement
-                    "ticks_lookback_period": "5s",  // Looks back over the last 5 seconds to detect rapid price changes
-                    "minimum_time_in_period_threshold": 3000,  // Ensures that the time between oldest and newest tick is at least 3 seconds
-                    "signal_valid_for": "10s",  // Keeps the entry signal valid for 10 seconds after being triggered
-                    "execute_orders_enabled": true,  // Enables the execution of orders when entry conditions are met
-                    "entry_order_type": "MARKET",  // Uses market orders for immediate execution due to the fast-moving nature of the strategy
-                    "override_insufficient_grid_funds": false,  // Does not override insufficient funds; ensures orders are placed only if funds are sufficient
-                    
-                    // DCA Configuration
-                    "dca": {
-                      "period": "1M",  // Uses data from the last 1 month to calculate support levels
-                      "period_timeframe": "1m",  // Analyzes data in 1-minute intervals
-                      "algo": "LIN_PEAKS_TROUGHS_HIGHLOW",  // Algorithm for calculating support levels
-                      "nr_clusters": 3,  // Sets up 3 DCA levels to average down if the price moves against the position
-                      "outer_price_level_nr": 1,  // Uses the closest outer price level
-                      "outer_price_period": "3M",  // Considers outer prices from the last 3 months
-                      "outer_price_timeframe": "5m",  // Uses 5-minute candles for outer price calculation
-                      "outer_price_nr_clusters": 2,  // Considers 2 clusters for outer prices
-                      "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",  // Algorithm for outer price levels
-                      "minimum_distance_to_outer_price": 0.1,  // Ensures a minimum distance of 10% to outer price levels
-                      "ratio_power": 0.5,  // Controls the aggressiveness of DCA scaling
-                      "allow_add_new_smaller_dca": true  // Allows adding new smaller DCA orders if conditions are met
-                    },
-                    
-                    // Take Profit Configuration
-                    "tp": {
-                      "minimum_tp": 0.02,  // Sets a minimum take profit target of 2%
-                      "trailing_enabled": true,  // Enables trailing take profit to lock in gains
-                      "trailing_activation_distance_from_position_price": 0.01,  // Activates trailing TP when price is 1% above entry
-                      "trailing_trigger_distance_from_current_price": 0.005,  // Triggers trailing TP when price drops by 0.5% from peak
-                      "trailing_execution_distance_price_steps": 2,  // Uses 2 price steps for trailing execution
-                      "trailing_shift_threshold": 0.001  // Adjusts trailing TP when price moves by 0.1%
-                    }
-                  }
+            
+            "long": {
+                "enabled": true,
+                "strategy": "FastCatcherLongStrategy",
+                "tick_execution_interval_ms": 100,  // Set to 100ms for high-frequency execution to react quickly to tick data changes
+                "mode": "NORMAL",
+                "wallet_exposure_ratio": 0.02,  // Limits exposure to 2% of the wallet balance to manage risk in volatile conditions
+                "strategy_config": {
+                // Entry Conditions Based on Tick Data
+                "minimum_nr_ticks_threshold": 50,  // Requires at least 50 ticks in the lookback period to consider entry, ensuring sufficient market activity
+                "price_diff_pct_threshold": 0.5,  // Triggers entry when there's at least a 0.5% increase in price, indicating significant upward movement
+                "ticks_lookback_period": "5s",  // Looks back over the last 5 seconds to detect rapid price changes
+                "minimum_time_in_period_threshold": 3000,  // Ensures that the time between oldest and newest tick is at least 3 seconds
+                "signal_valid_for": "10s",  // Keeps the entry signal valid for 10 seconds after being triggered
+                "execute_orders_enabled": true,  // Enables the execution of orders when entry conditions are met
+                "entry_order_type": "MARKET",  // Uses market orders for immediate execution due to the fast-moving nature of the strategy
+                "override_insufficient_grid_funds": false,  // Does not override insufficient funds; ensures orders are placed only if funds are sufficient
+                
+                // DCA Configuration
+                "dca": {
+                    "period": "1M",  // Uses data from the last 1 month to calculate support levels
+                    "period_timeframe": "1m",  // Analyzes data in 1-minute intervals
+                    "algo": "LIN_PEAKS_TROUGHS_HIGHLOW",  // Algorithm for calculating support levels
+                    "nr_clusters": 3,  // Sets up 3 DCA levels to average down if the price moves against the position
+                    "outer_price_level_nr": 1,  // Uses the closest outer price level
+                    "outer_price_period": "3M",  // Considers outer prices from the last 3 months
+                    "outer_price_timeframe": "5m",  // Uses 5-minute candles for outer price calculation
+                    "outer_price_nr_clusters": 2,  // Considers 2 clusters for outer prices
+                    "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",  // Algorithm for outer price levels
+                    "minimum_distance_to_outer_price": 0.1,  // Ensures a minimum distance of 10% to outer price levels
+                    "ratio_power": 0.5,  // Controls the aggressiveness of DCA scaling
+                    "allow_add_new_smaller_dca": true  // Allows adding new smaller DCA orders if conditions are met
+                },
+                
+                // Take Profit Configuration
+                "tp": {
+                    "minimum_tp": 0.02,  // Sets a minimum take profit target of 2%
+                    "trailing_enabled": true,  // Enables trailing take profit to lock in gains
+                    "trailing_activation_distance_from_position_price": 0.01,  // Activates trailing TP when price is 1% above entry
+                    "trailing_trigger_distance_from_current_price": 0.005,  // Triggers trailing TP when price drops by 0.5% from peak
+                    "trailing_execution_distance_price_steps": 2,  // Uses 2 price steps for trailing execution
+                    "trailing_shift_threshold": 0.001  // Adjusts trailing TP when price moves by 0.1%
                 }
-              },              
+                }
+            },              
             "short": {
                 "enabled": false,
                 "strategy": "BigShortStrategy",
