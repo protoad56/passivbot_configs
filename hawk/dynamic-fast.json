@@ -123,7 +123,7 @@
                 }
             },              
             "short": {
-                "enabled": false,
+                "enabled": true,
                 "strategy": "BigShortStrategy",
                 "wallet_exposure_ratio": 2,
                 "tick_execution_interval_ms": 250,
