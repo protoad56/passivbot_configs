@@ -47,12 +47,12 @@
                     ]
                 }
             },
-            // {
-            //     "filter": "MinNotionalFilter",
-            //     "config": {
-            //         "less_than": 10
-            //     }
-            // },
+            {
+                "filter": "MinNotionalFilter",
+                "config": {
+                    "less_than": 10
+                }
+            },
             {
                 "filter": "AgeFilter",
                 "config": {
@@ -63,7 +63,7 @@
                 "filter": "Last24hVolumeFilter",
                 "config": {
                   "sort": "desc",
-                  "top": 50
+                  "top": 100
                 }
             },
             {
@@ -87,16 +87,26 @@
                     "limit_orders_reissue_threshold": 0.00001,
                     "repost_lower_allowed": false,
                     "dca": {
-                        "allow_add_new_smaller_dca": false,
-                        "period": "3D",
+                        "period": "5D",
                         "period_timeframe": "1m",
-                        "algo": "LINEAR",
-                        "nr_clusters": 4,
-                        "outer_price_distance": 0.04,
-                        "ratio_power": 1.6
+                        "algo": "LIN_PEAKS_TROUGHS_HIGHLOW",
+                        "nr_clusters": 6,
+                        "outer_price_level_nr": 1,
+                        "outer_price_period": "24M",
+                        "outer_price_timeframe": "4H",
+                        "outer_price_nr_clusters": 3,
+                        "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
+                        "minimum_distance_to_outer_price": 0.25,
+                        "ratio_power": 0.7,
+                        "allow_add_new_smaller_dca": true
                     },
                     "tp": {
-                        "minimum_tp": 0.002
+                        "minimum_tp": 0.01,
+                        "trailing_enabled": true,
+                        "trailing_activation_distance_from_position_price": 0.0245,
+                        "trailing_trigger_distance_from_current_price": 0.0215,
+                        "trailing_execution_distance_price_steps": 3,
+                        "trailing_shift_threshold": 0.002
                     }
                 }
             },
