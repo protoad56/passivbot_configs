@@ -59,19 +59,19 @@
                     "older_than": "30D"
                 }
             },
+            // {
+            //     "filter": "Last24hVolumeFilter",
+            //     "config": {
+            //       "sort": "desc",
+            //       "top": 30
+            //     }
+            // },
             {
                 "filter": "Last24hPriceChangePctFilter",
                 "config": {
                     "sort": "desc",
                     "sort_absolute": true,
                     "top": 30
-                }
-            },
-            {
-                "filter": "Last24hVolumeFilter",
-                "config": {
-                  "sort": "desc",
-                  "top": 30
                 }
             }
         ],
