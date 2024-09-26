@@ -60,12 +60,12 @@
                 }
             },
             // {
-            //     "filter": "Last24hVolumeFilter",
-            //     "config": {
-            //       "sort": "desc",
-            //       "top": 30
-            //     }
-            // },
+                "filter": "Last24hVolumeFilter",
+                "config": {
+                  "sort": "desc",
+                  "top": 50
+                }
+            },
             {
                 "filter": "Last24hPriceChangePctFilter",
                 "config": {
