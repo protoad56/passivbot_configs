@@ -1,0 +1,187 @@
+{
+    "multicore": true,
+    "orderbook_used": false,
+    "hedge_mode": true,
+    "persisted_tick_purge_retain_count": 3000,
+    "initial_entry_search_attempts": 5,
+    "state_synchronize_interval_s": 5,
+    "initial_entry_ignore_not_found": true,
+    "override_max_exposure_ratio_check": true,
+    "plugins": {
+        "MultiAutoreducePlugin": {
+            "reduce_interval": "43200s",
+            "profit_percentage_used_for_reduction": 0.1,
+            "activate_above_upnl_pct": 200,
+            "max_age_income": "1D"
+        }
+    },
+    "dynamic_entry": {
+        "max_positions": 10,
+        "enabled": true,
+        "dynamic_entry_sweep_frequency": "15m",
+        "filters": [
+            {
+                "filter": "SymbolFilter",
+                "config": {
+                    "whitelist": [
+                        ".*USDT"
+                    ],
+                    "blacklist": [
+                        "LISTAUSDT",
+                        "TURBOUSDT",
+                        "AAVEUSDT",
+                        "AGIXUSDT",
+                        "OCEANUSDT",
+                        "BTCUSDT",
+                        "ETHUSDT",
+                        "SOLUSDT",
+                        "BTCDOMUSDT",
+                        "EURUSDT",
+                        "GBPUSDT",
+                        "JPYUSDT",
+                        "USDUSDT",
+                        "BUSDUSDT",
+                        "USDCUSDT",
+                        ".*DOWN/.*",
+                        ".*UP/.*"
+                    ]
+                }
+            },
+                        {
+                "filter": "MinNotionalFilter",
+                "config": {
+                    "less_than": 10
+                }
+            },
+            {
+                "filter": "AgeFilter",
+                "config": {
+                    "older_than": "30D"
+                }
+            },
+            {
+                "filter": "Last24hPriceChangePctFilter",
+                "config": {
+                    "sort": "desc",
+                    "sort_absolute": true,
+                    "top": 30
+                }
+            },
+        {
+          "filter": "Last24hVolumeFilter",
+          "config": {
+            "sort": "desc",
+            "top": 50
+          }
+        },
+
+    ],
+    "symbol_config_template": {
+        "exchange_leverage": 20,
+        "long": {
+            "enabled": true,
+            "strategy": "BigLongStrategy",
+            "tick_execution_interval_ms": 250,
+            "mode": "NORMAL",
+            "wallet_exposure_ratio": 0.4,
+            "strategy_config": {
+                "entry_order_type": "LIMIT",
+                "cancel_orders_on_position_close": true,
+                "limit_orders_reissue_threshold": 0.003,
+                "repost_lower_allowed": true,
+                "dca": {
+                    "period": "12M",
+                    "period_timeframe": "15m",
+                    "algo": "LIN_LINEAR_PEAKS_TROUGHS_HIGHLOW",
+                    "nr_clusters": 6,
+                    "outer_price_level_nr": 1,
+                    "outer_price_period": "24M",
+                    "outer_price_timeframe": "4H",
+                    "outer_price_nr_clusters": 10,
+                    "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
+                    "minimum_distance_to_outer_price": 0.10,
+                    "ratio_power": 0.7,
+                    "allow_add_new_smaller_dca": true,
+//                      "outer_price_distance": 0.084,
+                },
+                "tp": {
+                    "minimum_tp": 0.10,
+                    "trailing_enabled": true,
+                    "trailing_activation_distance_from_position_price": 0.025,
+                    "trailing_trigger_distance_from_current_price": 0.00215,
+                    "trailing_execution_distance_price_steps": 3,
+                    "trailing_shift_threshold": 0.002
+                },
+                "hedge": {
+                    "activate_hedge_above_upnl_pct": 15,
+                    "dca_config": {
+                        "period": "3M",
+                        "period_timeframe": "1H",
+                        "algo": "LIN_PEAKS_TROUGHS_HIGHLOW",
+                        "nr_clusters": 6,
+                        "outer_price_level_nr": 1,
+                        "outer_price_period": "24M",
+                        "outer_price_timeframe": "4H",
+                        "outer_price_nr_clusters": 3,
+                        "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
+                        "minimum_distance_to_outer_price": 0.125,
+                        "ratio_power": 0.7
+                    }
+                }
+            }
+        },
+        "short": {
+            "enabled": false,
+            "strategy": "BigShortStrategy",
+            "tick_execution_interval_ms": 250,
+            "mode": "NORMAL",
+            "wallet_exposure_ratio": 0.035,
+            "strategy_config": {
+                "entry_order_type": "LIMIT",
+                "cancel_orders_on_position_close": true,
+                "limit_orders_reissue_threshold": 0.003,
+                "repost_lower_allowed": true,
+                "dca": {
+                    "period": "12M",
+                    "period_timeframe": "15m",
+                    "algo": "LIN_PEAKS_TROUGHS_HIGHLOW",
+                    "nr_clusters": 5,
+                    "outer_price_level_nr": 1,
+                    "outer_price_period": "24M",
+                    "outer_price_timeframe": "4H",
+                    "outer_price_nr_clusters": 3,
+                    "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
+                    "minimum_distance_to_outer_price": 0.38,
+                    "ratio_power": 0.65,
+                    "allow_add_new_smaller_dca": true
+                },
+                "tp": {
+                    "minimum_tp": 0.05,
+                    "trailing_enabled": true,
+                    "trailing_activation_distance_from_position_price": 0.0145,
+                    "trailing_trigger_distance_from_current_price": 0.0115,
+                    "trailing_execution_distance_price_steps": 3,
+                    "trailing_shift_threshold": 0.002
+                },
+
+                "hedge": {
+                    "activate_hedge_above_upnl_pct": 50,
+                    "dca_config": {
+                        "period": "3M",
+                        "period_timeframe": "1H",
+                        "algo": "LIN_PEAKS_TROUGHS_HIGHLOW",
+                        "nr_clusters": 5,
+                        "outer_price_level_nr": 1,
+                        "outer_price_period": "24M",
+                        "outer_price_timeframe": "1H",
+                        "outer_price_nr_clusters": 3,
+                        "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
+                        "minimum_distance_to_outer_price": 0.225,
+                        "ratio_power": 0.675
+                    }
+                }
+            }
+        }
+    }
+}
+}
