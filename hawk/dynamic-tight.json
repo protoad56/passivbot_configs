@@ -59,7 +59,7 @@
                     "older_than": "30D"
                 }
             },
-            // {
+            {
                 "filter": "Last24hVolumeFilter",
                 "config": {
                   "sort": "desc",
