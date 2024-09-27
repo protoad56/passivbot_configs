@@ -16,7 +16,7 @@
         }
     },
     "dynamic_entry": {
-        "max_positions": 2,
+        "max_positions": 3,
         "enabled": true,
         "dynamic_entry_sweep_frequency": "15m",
         "filters": [
@@ -60,6 +60,13 @@
                 }
             },
             {
+                "filter": "Last24hVolumeFilter",
+                "config": {
+                  "sort": "desc",
+                  "top": 50
+                }
+              },
+            {
                 "filter": "Last24hPriceChangePctFilter",
                 "config": {
                     "sort": "desc",
@@ -67,13 +74,7 @@
                     "top": 30
                 }
             },
-        {
-          "filter": "Last24hVolumeFilter",
-          "config": {
-            "sort": "desc",
-            "top": 50
-          }
-        },
+
 
     ],
     "symbol_config_template": {
@@ -131,54 +132,25 @@
             }
         },
         "short": {
-            "enabled": false,
+            "enabled": true,
             "strategy": "BigShortStrategy",
+            "wallet_exposure_ratio": 1.5,
             "tick_execution_interval_ms": 250,
-            "mode": "NORMAL",
-            "wallet_exposure_ratio": 0.035,
             "strategy_config": {
                 "entry_order_type": "LIMIT",
-                "cancel_orders_on_position_close": true,
-                "limit_orders_reissue_threshold": 0.003,
-                "repost_lower_allowed": true,
+                "limit_orders_reissue_threshold": 0.00001,
+                "repost_lower_allowed": false,
                 "dca": {
-                    "period": "12M",
-                    "period_timeframe": "15m",
-                    "algo": "LIN_PEAKS_TROUGHS_HIGHLOW",
-                    "nr_clusters": 5,
-                    "outer_price_level_nr": 1,
-                    "outer_price_period": "24M",
-                    "outer_price_timeframe": "4H",
-                    "outer_price_nr_clusters": 3,
-                    "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
-                    "minimum_distance_to_outer_price": 0.38,
-                    "ratio_power": 0.65,
-                    "allow_add_new_smaller_dca": true
+                    "allow_add_new_smaller_dca": false,
+                    "period": "3D",
+                    "period_timeframe": "1m",
+                    "algo": "LINEAR",
+                    "nr_clusters": 4,
+                    "outer_price_distance": 0.04,
+                    "ratio_power": 1.6
                 },
                 "tp": {
-                    "minimum_tp": 0.05,
-                    "trailing_enabled": true,
-                    "trailing_activation_distance_from_position_price": 0.0145,
-                    "trailing_trigger_distance_from_current_price": 0.0115,
-                    "trailing_execution_distance_price_steps": 3,
-                    "trailing_shift_threshold": 0.002
-                },
-
-                "hedge": {
-                    "activate_hedge_above_upnl_pct": 50,
-                    "dca_config": {
-                        "period": "3M",
-                        "period_timeframe": "1H",
-                        "algo": "LIN_PEAKS_TROUGHS_HIGHLOW",
-                        "nr_clusters": 5,
-                        "outer_price_level_nr": 1,
-                        "outer_price_period": "24M",
-                        "outer_price_timeframe": "1H",
-                        "outer_price_nr_clusters": 3,
-                        "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
-                        "minimum_distance_to_outer_price": 0.225,
-                        "ratio_power": 0.675
-                    }
+                    "minimum_tp": 0.002
                 }
             }
         }
