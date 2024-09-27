@@ -1,0 +1,124 @@
+{
+    "multicore": true,
+    "hedge_mode": true,
+    "tickstore_used": true,
+    "persisted_tick_purge_expiry_time": "5m",
+    "dynamic_entry": {
+        "max_positions": 2,
+        "enabled": true,
+        "dynamic_entry_sweep_frequency": "10s",
+        "filters": [
+            {
+                "filter": "SymbolFilter",
+                "config": {
+                    "whitelist": [
+                        ".*USDT"
+                    ],
+                    "blacklist": [
+                        "CKBUSDT",
+                        "TLMUSDT",
+                        "BTCUSDT",
+                        "SOLUSDT",
+                        "BTCDOMUSDT",
+                        "EURUSDT",
+                        "GBPUSDT",
+                        "JPYUSDT",
+                        "USDUSDT",
+                        "BUSDUSDT",
+                        "USDCUSDT",
+                        ".*DOWN/.*",
+                        ".*UP/.*"
+                    ]
+                }
+            },
+            {
+                "filter": "FundingRateFilter",
+                "config": {
+                    "sort": "desc",
+                    "sort_absolute": true,
+                    "top": 40
+                }
+            }
+        ],
+        "symbol_config_template": {
+            "exchange_leverage": 10,
+            "long": {
+                "enabled": true,
+                "strategy": "FastCatcherLongStrategy",
+                "pulse_interval_ms": 50,
+                "wallet_exposure_ratio": 0.000025,
+                "strategy_config": {
+                    "minimum_nr_ticks_threshold": 5,
+                    "price_diff_pct_threshold": -0.3,
+                    "ticks_lookback_period": "1000ms",
+                    "minimum_time_in_period_threshold": 100,
+                    "signal_valid_for": "3s",
+                    "execute_orders_enabled": true,
+                    "entry_order_type": "MARKET",
+                    "override_insufficient_grid_funds": true,
+                    "dca": {
+                        "algo": "IMMEDIATE_LINEAR",
+                        "nr_clusters": 4,
+                        "outer_price_distance": 0.0235,
+                        "ratio_power": 1,
+                        "allow_add_new_smaller_dca": false
+                    },
+                    "tp": {
+                        "minimum_tp": 0.0022
+                    },
+                    "stoploss": {
+                        "enabled": false,
+                        "last_entry_trigger_distance": 0.0075,
+                        "order_type": "STOP"
+                    }
+                }
+            },
+            "short": {
+                "enabled": false,
+                "strategy": "BigShortStrategy",
+                "tick_execution_interval_ms": 250,
+                "mode": "NORMAL",
+                "wallet_exposure_ratio": 0.35,
+                "strategy_config": {
+                    "entry_order_type": "LIMIT",
+                    "cancel_orders_on_position_close": true,
+                    "limit_orders_reissue_threshold": 0.003,
+                    "repost_lower_allowed": false,
+                    "dca": {
+                        "period": "12M",
+                        "period_timeframe": "1H",
+                        "algo": "IMMEDIATE_LINEAR",
+                        "nr_clusters": 5,
+                        "outer_price_level_nr": 1,
+                        "outer_price_period": "12M",
+                        "outer_price_timeframe": "1H",
+                        "outer_price_nr_clusters": 2,
+                        "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
+                        "minimum_distance_to_outer_price": 0.355,
+                        "ratio_power": 1,
+                        "allow_add_new_smaller_dca": false
+                    },
+                    "tp": {
+                        "minimum_tp": 0.05,
+                        "trailing_enabled": true,
+                        "trailing_activation_distance_from_position_price": 0.0245,
+                        "trailing_trigger_distance_from_current_price": 0.0215,
+                        "trailing_execution_distance_price_steps": 3,
+                        "trailing_shift_threshold": 0.002
+                    },
+                    "hedge": {
+                        "activate_hedge_above_upnl_pct": 50,
+                        "dca_config": {
+                            "period": "24M",
+                            "period_timeframe": "4H",
+                            "algo": "IMMEDIATE_LINEAR",
+                            "nr_clusters": 4,
+                            "outer_price_distance_from_opposite_position": 0.08875,
+                            "ratio_power": 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
