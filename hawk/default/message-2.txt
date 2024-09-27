@@ -1,0 +1,66 @@
+```
+{
+    "exchange": "binance",
+    "account": "binance_01",
+    "persisted_tick_purge_expiry_time": "5m",
+    "hedge_mode": true,
+    "multicore": false,
+    "state_synchronize_interval_s": 5,
+    "initial_entry_block_ms": 11000,
+    "override_max_exposure_ratio_check": true,
+    "symbol_configs": [
+        {
+            "symbol": [
+                "DOGSUSDT"
+            ],
+            "exchange_leverage": 50,
+            "long": {
+                "enabled": true,
+                "strategy": "BigLongStrategy",
+                "wallet_exposure_ratio": 23,
+                "tick_execution_interval_ms": 250,
+                "strategy_config": {
+                    "entry_order_type": "LIMIT",
+                    "limit_orders_reissue_threshold": 0.00001,
+                    "repost_lower_allowed": false,
+                    "dca": {
+                        "allow_add_new_smaller_dca": false,
+                        "period": "3D",
+                        "period_timeframe": "1m",
+                        "algo": "LINEAR",
+                        "nr_clusters": 4,
+                        "outer_price_distance": 0.04,
+                        "ratio_power": 1.6
+                    },
+                    "tp": {
+                        "minimum_tp": 0.002
+                    }
+                }
+            },
+            "short": {
+                "enabled": true,
+                "strategy": "BigShortStrategy",
+                "wallet_exposure_ratio": 23,
+                "tick_execution_interval_ms": 250,
+                "strategy_config": {
+                    "entry_order_type": "LIMIT",
+                    "limit_orders_reissue_threshold": 0.00001,
+                    "repost_lower_allowed": false,
+                    "dca": {
+                        "allow_add_new_smaller_dca": false,
+                        "period": "3D",
+                        "period_timeframe": "1m",
+                        "algo": "LINEAR",
+                        "nr_clusters": 4,
+                        "outer_price_distance": 0.04,
+                        "ratio_power": 1.6
+                    },
+                    "tp": {
+                        "minimum_tp": 0.002
+                    }
+                }
+            }
+        }
+    ]
+}
+```
