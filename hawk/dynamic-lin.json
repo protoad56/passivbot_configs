@@ -114,7 +114,7 @@
                     "tp": {
                         "minimum_tp": 0.10,
                         "trailing_enabled": true,
-                        "trailing_activation_distance_from_position_price": 0.025,
+                        "trailing_activation_distance_from_position_price": 0.020,
                         "trailing_trigger_distance_from_current_price": 0.00215,
                         "trailing_execution_distance_price_steps": 3,
                         "trailing_shift_threshold": 0.002
