@@ -9,9 +9,9 @@
     "override_max_exposure_ratio_check": true,
     "plugins": {
         "MultiAutoreducePlugin": {
-            "reduce_interval": "43200s",
+            "reduce_interval": "12h",
             "profit_percentage_used_for_reduction": 0.1,
-            "activate_above_upnl_pct": 200,
+            "activate_above_upnl_pct": -50,
             "max_age_income": "1D"
         }
     },
@@ -45,14 +45,133 @@
                         ".*DOWN/.*",
                         ".*UP/.*",
                         "1000.*",
-                        "1EARTHUSDT", "ILAUSDT", "BOBAUSDT", "CWARUSDT", "OMGUSDT", "DMTRUSDT", "MLSUSDT", "TORNUSDT", "LUNAUSDT", "BTSUSDT", "QKCUSDT", "ACAUSDT", "FTTUSDT", "SRMUSDT", "YFIIUSDT", "SNMUSDT", "ANCUSDT", "AIONUSDT", "MIRUSDT", "WABIUSDT", "QLCUSDT", "NEBLUSDT", "AUTOUSDT", "VGXUSDT", "DREPUSDT", "PNTUSDT", "PERLUSDT", "LOOMUSDT", "IDUSDT", "NULSUSDT", "TOMOUSDT", 
-                        "WTCUSDT", "1000SATSUSDT", "ORDIUSDT", "XMRUSDT", "ANTUSDT", "MULTIUSDT", "VAIUSDT", "DREPUSDT", "MOBUSDT", "PNTUSDT", "BTCDOMUSDT", "WAVESUSDT", "WNXMUSDT", "XEMUSDT", "ZECUSDT", "ELFUSDT", "ARKUSDT", "MDXUSDT", "BETAUSDT", "KP3RUSDT", "AKROUSDT", "AMBUSDT", "BONDUSDT", "FIROUSDT", "OAXUSDT", "EPXUSDT", "OOKIUSDT", "ONDOUSDT", "TRUMPUSDT", "MAGAUSDT",
-                         "MAGAETHUSDT", "TREMPUSDT", "BODENUSDT", "STRUMPUSDT", "TOOKERUSDT", "TMANIAUSDT", "BOBBYUSDT", "BABYTRUMPUSDT", "PTTRUMPUSDT", "DTIUSDT", "TRUMPIEUSDT", "MAGAPEPEUSDT", "PEPEMAGAUSDT", "HARDUSDT", "MBLUSDT", "GALUSDT", "DOCKUSDT", "POLSUSDT", "CTXCUSDT", "JASMYUSDT", "CVXUSDT", "BALUSDT", "SUNUSDT", "SNTUSDT", "CREAMUSDT", "RENUSDT", "LINAUSDT", "REEFUSDT", "UNFIUSDT", "IRISUSDT", "CVPUSDT",
-                        "ACMUSDT", "AFAUSDT", "ALAUSDT", "ALLUSDT", "ALPINEUSDT", "APLUSDT", "ASRUSDT", "ATMUSDT", "BARUSDT", "CAIUSDT", "CHZUSDT", "CITYUSDT", "FORUSDT", "GALUSDT", "GOZUSDT", "IBFKUSDT", "JUVUSDT", "LEGUSDT", "LOCK-1USDT", "NAVIUSDT", "NMRUSDT", "NOVUSDT", "PFLUSDT", "PSGUSDT", "ROUSHUSDT", "STVUSDT", "THUSDT", "TRAUSDT", "UCHUSDT", "UFCUSDT", "YBOUSDT"
+                        "1EARTHUSDT",
+                        "ILAUSDT",
+                        "BOBAUSDT",
+                        "CWARUSDT",
+                        "OMGUSDT",
+                        "DMTRUSDT",
+                        "MLSUSDT",
+                        "TORNUSDT",
+                        "LUNAUSDT",
+                        "BTSUSDT",
+                        "QKCUSDT",
+                        "ACAUSDT",
+                        "FTTUSDT",
+                        "SRMUSDT",
+                        "YFIIUSDT",
+                        "SNMUSDT",
+                        "ANCUSDT",
+                        "AIONUSDT",
+                        "MIRUSDT",
+                        "WABIUSDT",
+                        "QLCUSDT",
+                        "NEBLUSDT",
+                        "AUTOUSDT",
+                        "VGXUSDT",
+                        "DREPUSDT",
+                        "PNTUSDT",
+                        "PERLUSDT",
+                        "LOOMUSDT",
+                        "IDUSDT",
+                        "NULSUSDT",
+                        "TOMOUSDT",
+                        "WTCUSDT",
+                        "1000SATSUSDT",
+                        "ORDIUSDT",
+                        "XMRUSDT",
+                        "ANTUSDT",
+                        "MULTIUSDT",
+                        "VAIUSDT",
+                        "DREPUSDT",
+                        "MOBUSDT",
+                        "PNTUSDT",
+                        "BTCDOMUSDT",
+                        "WAVESUSDT",
+                        "WNXMUSDT",
+                        "XEMUSDT",
+                        "ZECUSDT",
+                        "ELFUSDT",
+                        "ARKUSDT",
+                        "MDXUSDT",
+                        "BETAUSDT",
+                        "KP3RUSDT",
+                        "AKROUSDT",
+                        "AMBUSDT",
+                        "BONDUSDT",
+                        "FIROUSDT",
+                        "OAXUSDT",
+                        "EPXUSDT",
+                        "OOKIUSDT",
+                        "ONDOUSDT",
+                        "TRUMPUSDT",
+                        "MAGAUSDT",
+                        "MAGAETHUSDT",
+                        "TREMPUSDT",
+                        "BODENUSDT",
+                        "STRUMPUSDT",
+                        "TOOKERUSDT",
+                        "TMANIAUSDT",
+                        "BOBBYUSDT",
+                        "BABYTRUMPUSDT",
+                        "PTTRUMPUSDT",
+                        "DTIUSDT",
+                        "TRUMPIEUSDT",
+                        "MAGAPEPEUSDT",
+                        "PEPEMAGAUSDT",
+                        "HARDUSDT",
+                        "MBLUSDT",
+                        "GALUSDT",
+                        "DOCKUSDT",
+                        "POLSUSDT",
+                        "CTXCUSDT",
+                        "JASMYUSDT",
+                        "CVXUSDT",
+                        "BALUSDT",
+                        "SUNUSDT",
+                        "SNTUSDT",
+                        "CREAMUSDT",
+                        "RENUSDT",
+                        "LINAUSDT",
+                        "REEFUSDT",
+                        "UNFIUSDT",
+                        "IRISUSDT",
+                        "CVPUSDT",
+                        "ACMUSDT",
+                        "AFAUSDT",
+                        "ALAUSDT",
+                        "ALLUSDT",
+                        "ALPINEUSDT",
+                        "APLUSDT",
+                        "ASRUSDT",
+                        "ATMUSDT",
+                        "BARUSDT",
+                        "CAIUSDT",
+                        "CHZUSDT",
+                        "CITYUSDT",
+                        "FORUSDT",
+                        "GALUSDT",
+                        "GOZUSDT",
+                        "IBFKUSDT",
+                        "JUVUSDT",
+                        "LEGUSDT",
+                        "LOCK-1USDT",
+                        "NAVIUSDT",
+                        "NMRUSDT",
+                        "NOVUSDT",
+                        "PFLUSDT",
+                        "PSGUSDT",
+                        "ROUSHUSDT",
+                        "STVUSDT",
+                        "THUSDT",
+                        "TRAUSDT",
+                        "UCHUSDT",
+                        "UFCUSDT",
+                        "YBOUSDT"
                     ]
                 }
             },
-                        {
+            {
                 "filter": "MinNotionalFilter",
                 "config": {
                     "less_than": 10
@@ -67,10 +186,10 @@
             {
                 "filter": "Last24hVolumeFilter",
                 "config": {
-                  "sort": "desc",
-                  "top": 100
+                    "sort": "desc",
+                    "top": 100
                 }
-              },
+            },
             {
                 "filter": "Last24hPriceChangePctFilter",
                 "config": {
@@ -82,7 +201,6 @@
             {
                 "filter": "RandomizerFilter"
             }
-
         ],
         "symbol_config_template": {
             "exchange_leverage": 20,
@@ -110,7 +228,7 @@
                         "minimum_distance_to_outer_price": 0.10,
                         "ratio_power": 0.7,
                         "allow_add_new_smaller_dca": true,
-    //                      "outer_price_distance": 0.084,
+                        //                      "outer_price_distance": 0.084,
                     },
                     "tp": {
                         "minimum_tp": 0.10,
@@ -119,6 +237,24 @@
                         "trailing_trigger_distance_from_current_price": 0.00215,
                         "trailing_execution_distance_price_steps": 3,
                         "trailing_shift_threshold": 0.002
+                    },
+                    "wiggle": {
+                        "enabled": true,
+                        "activate_on_stuck": true,
+                        "decrease_size": 0.05, // Decrease position size by 1%; only set one of 'decrease_size' or 'decrease_coin_size'
+                        //"decrease_coin_size":,
+                        "increase_size": 0.1, // Increase position size by 1%; only set one of 'increase_size' or 'increase_coin_size'
+                        //"increase_coin_size":,
+                        // "force_exit_position_price_distance":0.05, // Forces exit if price moves within 5% of entry price
+                        // "force_exit_position_quantity_below":0.001,// Forces exit if position size drops below this quantity
+                        // "force_exit_position_wallet_exposure_distance_below":0.10, // Forces exit if position cost is within 10% of max wallet exposure
+                        "mode_after_closing": "NORMAL", // Mode after closing position; options might include "NORMAL", "OFF", etc.
+                        //"tp_on_profit": true,
+                        "period": "12M", // Required: Period for support/resistance analysis (e.g., "12M" for 12 months)
+                        "timeframe": "15m", // Required: Timeframe for support/resistance (e.g., "15m" for 15 minutes)
+                        "algo": "PEAKS_TROUGHS_HIGHLOW",
+                        "wiggle_on_tick": false,
+                        "wiggle_execution_delay_ms": 2500 // Delay between wiggle executions in milliseconds to prevent rapid re-execution
                     }
                 }
             },
