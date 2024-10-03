@@ -9,7 +9,7 @@
     "override_max_exposure_ratio_check": true,
     "plugins": {
         "MultiAutoreducePlugin": {
-            "reduce_interval": "12h",
+            "reduce_interval": "12H",
             "profit_percentage_used_for_reduction": 0.1,
             "activate_above_upnl_pct": -50,
             "max_age_income": "1D"
