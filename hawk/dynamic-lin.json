@@ -238,6 +238,15 @@
                         "trailing_execution_distance_price_steps": 3,
                         "trailing_shift_threshold": 0.002
                     },
+                    "hedge": {
+                        "activate_hedge_above_wallet_exposure_pct": 1,
+                        "dca_config": {
+                            "algo": "LINEAR",
+                            "ratio_power": 1.4,
+                            "nr_clusters": 4,
+                            "outer_price_distance": 0.04
+                        }
+                    }
                     // "wiggle": {
                     //     "enabled": true,
                     //     "activate_on_stuck": true,
