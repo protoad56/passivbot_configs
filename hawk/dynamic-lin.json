@@ -208,7 +208,7 @@
                 "enabled": true,
                 "strategy": "BigLongStrategy",
                 "tick_execution_interval_ms": 250,
-                "mode": "WIGGLE",
+                "mode": "NORMAL",
                 "wallet_exposure_ratio": 1,
                 "strategy_config": {
                     "entry_order_type": "LIMIT",
@@ -238,24 +238,24 @@
                         "trailing_execution_distance_price_steps": 3,
                         "trailing_shift_threshold": 0.002
                     },
-                    "wiggle": {
-                        "enabled": true,
-                        "activate_on_stuck": true,
-                        "decrease_size": 0.05, // Decrease position size by 1%; only set one of 'decrease_size' or 'decrease_coin_size'
-                        //"decrease_coin_size":,
-                        "increase_size": 0.1, // Increase position size by 1%; only set one of 'increase_size' or 'increase_coin_size'
-                        //"increase_coin_size":,
-                        // "force_exit_position_price_distance":0.05, // Forces exit if price moves within 5% of entry price
-                        // "force_exit_position_quantity_below":0.001,// Forces exit if position size drops below this quantity
-                        // "force_exit_position_wallet_exposure_distance_below":0.10, // Forces exit if position cost is within 10% of max wallet exposure
-                        "mode_after_closing": "NORMAL", // Mode after closing position; options might include "NORMAL", "OFF", etc.
-                        //"tp_on_profit": true,
-                        "period": "12M", // Required: Period for support/resistance analysis (e.g., "12M" for 12 months)
-                        "timeframe": "15m", // Required: Timeframe for support/resistance (e.g., "15m" for 15 minutes)
-                        "algo": "PEAKS_TROUGHS_HIGHLOW",
-                        "wiggle_on_tick": false,
-                        "wiggle_execution_delay_ms": 2500 // Delay between wiggle executions in milliseconds to prevent rapid re-execution
-                    }
+                    // "wiggle": {
+                    //     "enabled": true,
+                    //     "activate_on_stuck": true,
+                    //     "decrease_size": 0.05, // Decrease position size by 1%; only set one of 'decrease_size' or 'decrease_coin_size'
+                    //     //"decrease_coin_size":,
+                    //     "increase_size": 0.1, // Increase position size by 1%; only set one of 'increase_size' or 'increase_coin_size'
+                    //     //"increase_coin_size":,
+                    //     // "force_exit_position_price_distance":0.05, // Forces exit if price moves within 5% of entry price
+                    //     // "force_exit_position_quantity_below":0.001,// Forces exit if position size drops below this quantity
+                    //     // "force_exit_position_wallet_exposure_distance_below":0.10, // Forces exit if position cost is within 10% of max wallet exposure
+                    //     "mode_after_closing": "NORMAL", // Mode after closing position; options might include "NORMAL", "OFF", etc.
+                    //     //"tp_on_profit": true,
+                    //     "period": "12M", // Required: Period for support/resistance analysis (e.g., "12M" for 12 months)
+                    //     "timeframe": "15m", // Required: Timeframe for support/resistance (e.g., "15m" for 15 minutes)
+                    //     "algo": "PEAKS_TROUGHS_HIGHLOW",
+                    //     "wiggle_on_tick": false,
+                    //     "wiggle_execution_delay_ms": 2500 // Delay between wiggle executions in milliseconds to prevent rapid re-execution
+                    // }
                 }
             },
             "short": {
