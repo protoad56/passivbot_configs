@@ -208,7 +208,7 @@
                 "enabled": true,
                 "strategy": "BigLongStrategy",
                 "tick_execution_interval_ms": 250,
-                "mode": "NORMAL",
+                "mode": "WIGGLE",
                 "wallet_exposure_ratio": 1,
                 "strategy_config": {
                     "entry_order_type": "LIMIT",
