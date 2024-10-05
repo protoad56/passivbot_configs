@@ -1,304 +1,144 @@
-{
-    "analysis": {
-        "adg": 0.000774190630479094,
-        "drawdown_worst": 0.1864637576173959,
-        "equity_balance_diff_max": 0.17237211678964248,
-        "equity_balance_diff_mean": 0.005562373331384846,
-        "loss_profit_ratio": 0.5088244120407894,
-        "mdg": 0.00031571610303021534,
-        "n_iters": 9473,
-        "sharpe_ratio": 0.1201565608361197,
-        "w_0": -0.00031571610303021534,
-        "w_1": -0.1201565608361197
-    },
-    "backtest": {
-        "base_dir": "backtests",
-        "end_date": "now",
-        "exchange": "binance",
-        "start_date": "2021-05-01",
-        "starting_balance": 100000,
-        "symbols": [
-            "SNXUSDT"
-        ]
-    },
-    "bot": {
-        "long": {
-            "close_grid_markup_range": 0.0009864036580571611,
-            "close_grid_min_markup": 0.0368179674584717,
-            "close_grid_qty_pct": 0.5775665726937435,
-            "close_trailing_grid_ratio": -0.23902547971056753,
-            "close_trailing_qty_pct": 0.20203035781537781,
-            "close_trailing_retracement_pct": 0.05804797955208376,
-            "close_trailing_threshold_pct": 0.06852990277096177,
-            "ema_span_0": 921.3200487300292,
-            "ema_span_1": 1068.4541193829004,
-            "entry_grid_double_down_factor": 2.081083278820744,
-            "entry_grid_spacing_pct": 0.10832211219737539,
-            "entry_grid_spacing_weight": 3.2806949024862417,
-            "entry_initial_ema_dist": -0.05788659147291194,
-            "entry_initial_qty_pct": 0.011479241221499688,
-            "entry_trailing_grid_ratio": -0.5423182503817985,
-            "entry_trailing_retracement_pct": 0.07232930427660263,
-            "entry_trailing_threshold_pct": 0.010612086449797838,
-            "n_positions": 5.959819158625999,
-            "total_wallet_exposure_limit": 3.0758080464401227,
-            "unstuck_close_pct": 0.031797950006963824,
-            "unstuck_ema_dist": -0.07637557389656573,
-            "unstuck_loss_allowance_pct": 0.00986051140825222,
-            "unstuck_threshold": 0.474359345085913
-        },
-        "short": {
-            "close_grid_markup_range": 0.02725047050789858,
-            "close_grid_min_markup": 0.01599121920342514,
-            "close_grid_qty_pct": 0.6830999631322688,
-            "close_trailing_grid_ratio": 0.029895249460071716,
-            "close_trailing_qty_pct": 0.7236091628955431,
-            "close_trailing_retracement_pct": 0.008061311756456184,
-            "close_trailing_threshold_pct": 0.009590776205122303,
-            "ema_span_0": 809.7939868860299,
-            "ema_span_1": 1223.503330779423,
-            "entry_grid_double_down_factor": 2.5563322826505246,
-            "entry_grid_spacing_pct": 0.005101462947146654,
-            "entry_grid_spacing_weight": 4.677123931014319,
-            "entry_initial_ema_dist": -0.003098836833417773,
-            "entry_initial_qty_pct": 0.0982470252927742,
-            "entry_trailing_grid_ratio": 0.8053192755913139,
-            "entry_trailing_retracement_pct": 0.05890490713488873,
-            "entry_trailing_threshold_pct": -0.031993784660476046,
-            "n_positions": 0,
-            "total_wallet_exposure_limit": 4.173043802229551,
-            "unstuck_close_pct": 0.0771559795738767,
-            "unstuck_ema_dist": -0.02355951586660278,
-            "unstuck_loss_allowance_pct": 0.03810676105347601,
-            "unstuck_threshold": 0.5727910019335108
-        }
-    },
-    "live": {
-        "approved_coins": [
-            "SNXUSDT"
-        ],
-        "auto_gs": true,
-        "coin_flags": {},
-        "execution_delay_seconds": 2,
-        "filter_by_min_effective_cost": true,
-        "forced_mode_long": "",
-        "forced_mode_short": "",
-        "ignored_coins": [
-            "COIN1",
-            "COIN2"
-        ],
-        "leverage": 10,
-        "max_n_cancellations_per_batch": 5,
-        "max_n_creations_per_batch": 3,
-        "minimum_coin_age_days": 30,
-        "ohlcv_rolling_window": 60,
-        "pnls_max_lookback_days": 30,
-        "price_distance_threshold": 0.002,
-        "relative_volume_filter_clip_pct": 0.5,
-        "time_in_force": "good_till_cancelled",
-        "user": "hyperliquid_v7"
-    },
-    "optimize": {
-        "bounds": {
-            "long_close_grid_markup_range": [
-                0,
-                0.06
-            ],
-            "long_close_grid_min_markup": [
-                0.001,
-                0.06
-            ],
-            "long_close_grid_qty_pct": [
-                0.05,
-                1
-            ],
-            "long_close_trailing_grid_ratio": [
-                -1,
-                1
-            ],
-            "long_close_trailing_qty_pct": [
-                0.05,
-                1
-            ],
-            "long_close_trailing_retracement_pct": [
-                0,
-                0.3
-            ],
-            "long_close_trailing_threshold_pct": [
-                -0.1,
-                0.1
-            ],
-            "long_ema_span_0": [
-                200,
-                1440
-            ],
-            "long_ema_span_1": [
-                200,
-                1440
-            ],
-            "long_entry_grid_double_down_factor": [
-                0.1,
-                3
-            ],
-            "long_entry_grid_spacing_pct": [
-                0.001,
-                0.12
-            ],
-            "long_entry_grid_spacing_weight": [
-                0,
-                10
-            ],
-            "long_entry_initial_ema_dist": [
-                -0.1,
-                0.003
-            ],
-            "long_entry_initial_qty_pct": [
-                0.005,
-                0.1
-            ],
-            "long_entry_trailing_grid_ratio": [
-                -1,
-                1
-            ],
-            "long_entry_trailing_retracement_pct": [
-                0,
-                0.1
-            ],
-            "long_entry_trailing_threshold_pct": [
-                -0.1,
-                0.1
-            ],
-            "long_n_positions": [
-                1,
-                20
-            ],
-            "long_total_wallet_exposure_limit": [
-                2,
-                4
-            ],
-            "long_unstuck_close_pct": [
-                0.001,
-                0.1
-            ],
-            "long_unstuck_ema_dist": [
-                -0.1,
-                0.01
-            ],
-            "long_unstuck_loss_allowance_pct": [
-                0,
-                0.05
-            ],
-            "long_unstuck_threshold": [
-                0.4,
-                0.95
-            ],
-            "short_close_grid_markup_range": [
-                0,
-                0.03
-            ],
-            "short_close_grid_min_markup": [
-                0.001,
-                0.03
-            ],
-            "short_close_grid_qty_pct": [
-                0.05,
-                1
-            ],
-            "short_close_trailing_grid_ratio": [
-                -1,
-                1
-            ],
-            "short_close_trailing_qty_pct": [
-                0.05,
-                1
-            ],
-            "short_close_trailing_retracement_pct": [
-                0,
-                0.1
-            ],
-            "short_close_trailing_threshold_pct": [
-                -0.1,
-                0.1
-            ],
-            "short_ema_span_0": [
-                200,
-                1440
-            ],
-            "short_ema_span_1": [
-                200,
-                1440
-            ],
-            "short_entry_grid_double_down_factor": [
-                0.1,
-                3
-            ],
-            "short_entry_grid_spacing_pct": [
-                0.001,
-                0.12
-            ],
-            "short_entry_grid_spacing_weight": [
-                0,
-                10
-            ],
-            "short_entry_initial_ema_dist": [
-                -0.1,
-                0.003
-            ],
-            "short_entry_initial_qty_pct": [
-                0.005,
-                0.1
-            ],
-            "short_entry_trailing_grid_ratio": [
-                -1,
-                1
-            ],
-            "short_entry_trailing_retracement_pct": [
-                0,
-                0.1
-            ],
-            "short_entry_trailing_threshold_pct": [
-                -0.1,
-                0.1
-            ],
-            "short_n_positions": [
-                1,
-                20
-            ],
-            "short_total_wallet_exposure_limit": [
-                0,
-                5
-            ],
-            "short_unstuck_close_pct": [
-                0.001,
-                0.1
-            ],
-            "short_unstuck_ema_dist": [
-                -0.1,
-                0.01
-            ],
-            "short_unstuck_loss_allowance_pct": [
-                0,
-                0.05
-            ],
-            "short_unstuck_threshold": [
-                0.4,
-                0.95
-            ]
-        },
-        "crossover_probability": 0.7,
-        "iters": 10000,
-        "limits": {
-            "lower_bound_drawdown_worst": 0.25,
-            "lower_bound_equity_balance_diff_mean": 0.01,
-            "lower_bound_loss_profit_ratio": 0.6
-        },
-        "mutation_probability": 0.2,
-        "n_cpus": 8,
-        "population_size": 500,
-        "scoring": [
-            "mdg",
-            "sharpe_ratio"
-        ]
-    },
-    "results_filename": "optimize_results/2024-09-17T07_07_36_SNX_8236868d_all_results.txt"
-}
+{"analysis": {"adg": 0.000774190630479094,
+              "drawdown_worst": 0.1864637576173959,
+              "equity_balance_diff_max": 0.17237211678964248,
+              "equity_balance_diff_mean": 0.005562373331384846,
+              "loss_profit_ratio": 0.5088244120407894,
+              "mdg": 0.00031571610303021534,
+              "n_iters": 9473,
+              "sharpe_ratio": 0.1201565608361197,
+              "w_0": -0.00031571610303021534,
+              "w_1": -0.1201565608361197},
+ "backtest": {"base_dir": "backtests",
+              "end_date": "now",
+              "exchange": "binance",
+              "start_date": "2021-05-01",
+              "starting_balance": 100000,
+              "symbols": ["SNXUSDT"]},
+ "bot": {"long": {"close_grid_markup_range": 0.013525619096259139,
+                  "close_grid_min_markup": 0.0023327143515485494,
+                  "close_grid_qty_pct": 0.2885267740947005,
+                  "close_trailing_grid_ratio": -0.4714831067156592,
+                  "close_trailing_qty_pct": 0.8567070608551626,
+                  "close_trailing_retracement_pct": 0.11691800270727332,
+                  "close_trailing_threshold_pct": 0.03333914037666512,
+                  "ema_span_0": 1425.5073822453928,
+                  "ema_span_1": 438.81012886054555,
+                  "entry_grid_double_down_factor": 0.9140038662559601,
+                  "entry_grid_spacing_pct": 0.07977921989729927,
+                  "entry_grid_spacing_weight": 7.767975649512209,
+                  "entry_initial_ema_dist": -0.0029618476521205504,
+                  "entry_initial_qty_pct": 0.02146459978780785,
+                  "entry_trailing_grid_ratio": -0.49646420726325713,
+                  "entry_trailing_retracement_pct": 0.048621814318819685,
+                  "entry_trailing_threshold_pct": -0.08427080784496861,
+                  "filter_relative_volume_clip_pct": 0.22593156003583723,
+                  "filter_rolling_window": 940.3289669449892,
+                  "n_positions": 1.0,
+                  "total_wallet_exposure_limit": 2.5,
+                  "unstuck_close_pct": 0.05212949420226774,
+                  "unstuck_ema_dist": -0.02103243913826442,
+                  "unstuck_loss_allowance_pct": 0.037040229899632536,
+                  "unstuck_threshold": 0.4364590760102875},
+         "short": {"close_grid_markup_range": 0.02538065898505245,
+                   "close_grid_min_markup": 0.008430546076031427,
+                   "close_grid_qty_pct": 0.6930277081239071,
+                   "close_trailing_grid_ratio": 0.6365604396798779,
+                   "close_trailing_qty_pct": 0.8013741748992611,
+                   "close_trailing_retracement_pct": 0.09691035772233358,
+                   "close_trailing_threshold_pct": -0.0022605070543050138,
+                   "ema_span_0": 1321.977610215914,
+                   "ema_span_1": 1363.3973206142332,
+                   "entry_grid_double_down_factor": 0.8156514659362186,
+                   "entry_grid_spacing_pct": 0.10393869829322168,
+                   "entry_grid_spacing_weight": 6.3889817662636865,
+                   "entry_initial_ema_dist": -0.08155878407437586,
+                   "entry_initial_qty_pct": 0.01617239950708938,
+                   "entry_trailing_grid_ratio": 0.4085872426317898,
+                   "entry_trailing_retracement_pct": 0.08876762375734738,
+                   "entry_trailing_threshold_pct": 0.048025691385584164,
+                   "filter_relative_volume_clip_pct": 0.20467762616130258,
+                   "filter_rolling_window": 47.39130925625069,
+                   "n_positions": 1.0,
+                   "total_wallet_exposure_limit": 1.0,
+                   "unstuck_close_pct": 0.09553251653488454,
+                   "unstuck_ema_dist": -0.026782921671639447,
+                   "unstuck_loss_allowance_pct": 0.03126161267916318,
+                   "unstuck_threshold": 0.40844536563230166}},
+ "live": {"approved_coins": ["SNXUSDT"],
+          "auto_gs": true,
+          "coin_flags": {},
+          "execution_delay_seconds": 2,
+          "filter_by_min_effective_cost": true,
+          "forced_mode_long": "",
+          "forced_mode_short": "",
+          "ignored_coins": [],
+          "leverage": 10,
+          "max_n_cancellations_per_batch": 5,
+          "max_n_creations_per_batch": 3,
+          "minimum_coin_age_days": 30,
+          "ohlcv_rolling_window": 60,
+          "pnls_max_lookback_days": 30,
+          "price_distance_threshold": 0.002,
+          "relative_volume_filter_clip_pct": 0.5,
+          "time_in_force": "good_till_cancelled",
+          "user": "hyperliquid_v7"},
+ "optimize": {"bounds": {"long_close_grid_markup_range": [0, 0.06],
+                         "long_close_grid_min_markup": [0.001, 0.06],
+                         "long_close_grid_qty_pct": [0.05, 1],
+                         "long_close_trailing_grid_ratio": [-1, 1],
+                         "long_close_trailing_qty_pct": [0.05, 1],
+                         "long_close_trailing_retracement_pct": [0, 0.3],
+                         "long_close_trailing_threshold_pct": [-0.1, 0.1],
+                         "long_ema_span_0": [200, 1440],
+                         "long_ema_span_1": [200, 1440],
+                         "long_entry_grid_double_down_factor": [0.1, 3],
+                         "long_entry_grid_spacing_pct": [0.001, 0.12],
+                         "long_entry_grid_spacing_weight": [0, 10],
+                         "long_entry_initial_ema_dist": [-0.1, 0.003],
+                         "long_entry_initial_qty_pct": [0.005, 0.1],
+                         "long_entry_trailing_grid_ratio": [-1, 1],
+                         "long_entry_trailing_retracement_pct": [0, 0.1],
+                         "long_entry_trailing_threshold_pct": [-0.1, 0.1],
+                         "long_filter_relative_volume_clip_pct": [0.0, 1.0],
+                         "long_filter_rolling_window": [10.0, 1440.0],
+                         "long_n_positions": [1.0, 1.0],
+                         "long_total_wallet_exposure_limit": [2.5, 2.5],
+                         "long_unstuck_close_pct": [0.001, 0.1],
+                         "long_unstuck_ema_dist": [-0.1, 0.01],
+                         "long_unstuck_loss_allowance_pct": [0, 0.05],
+                         "long_unstuck_threshold": [0.4, 0.95],
+                         "short_close_grid_markup_range": [0, 0.03],
+                         "short_close_grid_min_markup": [0.001, 0.03],
+                         "short_close_grid_qty_pct": [0.05, 1],
+                         "short_close_trailing_grid_ratio": [-1, 1],
+                         "short_close_trailing_qty_pct": [0.05, 1],
+                         "short_close_trailing_retracement_pct": [0, 0.1],
+                         "short_close_trailing_threshold_pct": [-0.1, 0.1],
+                         "short_ema_span_0": [200, 1440],
+                         "short_ema_span_1": [200, 1440],
+                         "short_entry_grid_double_down_factor": [0.1, 3],
+                         "short_entry_grid_spacing_pct": [0.001, 0.12],
+                         "short_entry_grid_spacing_weight": [0, 10],
+                         "short_entry_initial_ema_dist": [-0.1, 0.003],
+                         "short_entry_initial_qty_pct": [0.005, 0.1],
+                         "short_entry_trailing_grid_ratio": [-1, 1],
+                         "short_entry_trailing_retracement_pct": [0, 0.1],
+                         "short_entry_trailing_threshold_pct": [-0.1, 0.1],
+                         "short_filter_relative_volume_clip_pct": [0.0, 1.0],
+                         "short_filter_rolling_window": [10.0, 1440.0],
+                         "short_n_positions": [1.0, 1.0],
+                         "short_total_wallet_exposure_limit": [1.0, 1.0],
+                         "short_unstuck_close_pct": [0.001, 0.1],
+                         "short_unstuck_ema_dist": [-0.1, 0.01],
+                         "short_unstuck_loss_allowance_pct": [0, 0.05],
+                         "short_unstuck_threshold": [0.4, 0.95]},
+              "crossover_probability": 0.7,
+              "iters": 10000,
+              "limits": {"lower_bound_drawdown_worst": 0.25,
+                         "lower_bound_equity_balance_diff_mean": 0.01,
+                         "lower_bound_loss_profit_ratio": 0.6},
+              "mutation_probability": 0.2,
+              "n_cpus": 8,
+              "population_size": 500,
+              "scoring": ["mdg", "sharpe_ratio"]},
+ "results_filename": "optimize_results/2024-10-05T11_31_02_SNX_57eae1c1_all_results.txt"}
