@@ -217,7 +217,7 @@
                     "repost_lower_allowed": true,
                     "dca": {
                         "period": "6M",
-                        "period_timeframe": "10m",
+                        "period_timeframe": "5m",
                         "algo": "LIN_LINEAR_PEAKS_TROUGHS_HIGHLOW",
                         "nr_clusters": 6,
                         "outer_price_level_nr": 1,
