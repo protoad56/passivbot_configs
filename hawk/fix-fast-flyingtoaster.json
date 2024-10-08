@@ -1,0 +1,500 @@
+att
+adatt56
+Online
+in:#todo 
+hzlt — 12/21/2022 12:30 AM
+would be nice to see what caused the results above
+Doftorul — 12/21/2022 12:30 AM
+wicks is my guess 🙂
+but then it might be a bug too
+hzlt — 12/21/2022 12:31 AM
+yeah, hard to tell for me atm
+could be an aggregation issue maybe, but im on 1s
+like below
+Image
+Doftorul — 12/21/2022 12:32 AM
+yeah
+we'll get to the bottom of it
+step by step
+once we are able to see it in greater detail it will be easier to also spot weird behavior
+the cherry on top will be when i can pull data in real time as the backtest happens
+@Hawkeye has some ideas and will code the hooks so i can use them in the visualizer
+at least one can break the backtest early if the shit hits the fan and saves some time
+but the first version is static
+SH-Stark — 12/21/2022 6:37 AM
+Was a good reading here, thanks guys 🙂
+SH-Stark — 12/21/2022 7:48 AM
+@Neoraptor your DYDX configuration should have hit a GTFO during this night I think, now time to analyse how this could have been avoided
+Neoraptor — 12/21/2022 8:44 AM
+Hey, it indeed the GTFO order once 😉
+It is good to have this one checked as well.
+I'll experiment a bit with the new settings to only enter when near bigger supports/resistances and see if this help 
+hzlt — 12/21/2022 2:29 PM
+not too good unfortunately, but at least you don't have serious draw downs this way
+
+{"exchange": "binance", "hedge_mode": true, "symbol_configs": [{"symbol": ["ATOMUSDT"], "exchange_leverage": 10, "short": {"enabled": true, "mode": "NORMAL", "strategy": "BigShortStrategy", "wallet_exposure_ratio": 3, "strategy_config": {"cancel_orders_on_position_close": true, "entry_order_type": "LIMIT", "limit_orders_reissue_threshold": 0.003, "dca": {"algo": "LIN_PEAKS_TROUGHS_HIGHLOW", "period": "3M", "period_timeframe": "15m", "nr_clusters": 9, "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW", "outer_price_level_nr": 1, "outer_price_nr_clusters": 1, "outer_price_period": "12M", "outer_price_timeframe": "4H", "minimum_distance_to_outer_price": 0.05, "ratio_power": 0.7}, "tp": {"maximum_tp_orders": 1, "minimum_tp": "0.0080", "tp_interval": 0.0015}, "stoploss": {"distance": 0.002, "grid_range": 0.003, "nr_orders": 1}}}}]}
+./results//atom_comparison_sl_outer_price_clusters/21-12-2022T12:04:57
+nr_clusters_1                                                      nr_clusters_2                                                      nr_clusters_3                                                      nr_clusters_4                                                      nr_clusters_5                                                      nr_clusters_6                                                      nr_clusters_7                                                      nr_clusters_8                                                      nr_clusters_9
++------------------------------------------------------------+ -=- +------------------------------------------------------------+ -=- +------------------------------------------------------------+ -=- +------------------------------------------------------------+ -=- +------------------------------------------------------------+ -=- +------------------------------------------------------------+ -=- +------------------------------------------------------------+ -=- +------------------------------------------------------------+ -=- +------------------------------------------------------------+
+|                      Backtest summary                      | -=- |                      Backtest summary                      | -=- |                      Backtest summary                      | -=- |                      Backtest summary                      | -=- |                      Backtest summary                      | -=- |                      Backtest summary                      | -=- |                      Backtest summary                      | -=- |                      Backtest summary                      | -=- |                      Backtest summary                      |... (90 KB left)
+Expand
+message.txt
+140 KB
+open the txt in notepad++ or vscode, notepad ruins the layout idk why
+and i was told there's a bug in sl with high volatility, so might not be too accurate since there's plenty high vol areas in the from-to date
+trying with gtfo as well now
+Hawkeye — 12/21/2022 2:36 PM
+the SL will be fairly accurate in BT, in live the price might suddenly shoot past it; in that case HB should place the SL just beyond the current price and keep trying / push the SL price closer to where it should be; atm it won't do that
+Hawkeye — 12/22/2022 9:57 PM
+@Neoraptor @JordanM maybe good to share & discuss your backtest attempts mod publicly here, since you’re both checking on some ideas. Might also be useful to share your reasoning on what your trying, perhaps it sparks some thoughts with other people too 🙂
+Neoraptor — 12/22/2022 10:18 PM
+I have been playing around the new parameters, to avoid entering near support/resistances. Here is the result of a few attempts:
+Same configs (2 DCA 15min / 1% GTFO / 0.25% TP), only changing the no_entry_within_resistance_distance:
+* no filtering near resistance: +34$ / 569 entries / 15 gtfo
+* 0.5%: +41$ / 554 entries / 14 gtfo
+* 1%: +42$ / 523 entries / 13 gtfo
+* 1.5%: +24$ / 404 entries / 13 gtfo
+* 2%: +14$ / 405 entries / 11 gtfo
+* 2.5%: +47$ / 356 entries / 7 gtfo
+* 3%: 17.4$ / 413 entries / 11 gtfo
+* 3.5%: 8$ / 391 entries / 11 gtfo
+* 4%: 3$ / 348 entries / 10 gtfo
+* 5%: + 33$ / 343 entries / 7 gtfo
+
+The idea behind is to find a config that is capable of taking loss from time to time while having a good win ratio.
+Here the base config (same all the time)
+{
+  # python3.11 backtest.py -b 500 -d 20221201-20221220 --config user_data/configTest3.json -t 1s
+
+    "exchange": "binance",
+    "hedge_mode": true,
+    "symbol_configs": [
+Expand
+message.txt
+3 KB
+Hawkeye — 12/23/2022 10:39 AM
+FYI latest push will automatically put the used command-line 1:1 in the config.json that is put in the backtests/ folder output
+Boernaldo — 01/02/2023 2:47 PM
+Python 3.11 is required?
+Neoraptor — 01/02/2023 2:49 PM
+nono. It works just fine with any Python 3 😉
+Hawkeye — 01/02/2023 2:49 PM
+if you find anything that doesn't work in a version >3.9 let me know 🙂 
+Boernaldo — 01/02/2023 2:52 PM
+root@bw:~/hawkbot# python3 backtest.py -b 500 -d 20221201-20221220 --config user_data/config2.json -t 1s
+2023-01-02 14:50:48,116 - hawkbot.backtest.exchange.exchange_simulator - INFO - Pre-loading data (this can take a long time with ticks)...
+2023-01-02 14:50:48,424 - hawkbot.backtest.exchange.exchange_simulator - INFO - DYDXUSDT: Loading candle step data...
+2023-01-02 14:50:59,002 - hawkbot.exchange.binance - INFO - Downloading monthly ticks for DYDXUSDT 2022-12...
+2023-01-02 14:50:59,498 - hawkbot.exchange.binance - INFO - Finished downloading monthly ticks for DYDXUSDT 2022-12
+2023-01-02 14:50:59,498 - hawkbot.exchange.binance - INFO - DYDXUSDT: Extracting ZIP-file into ticks (this can take a while)...
+Killed
+no clue why it gets killed 😄
+Hawkeye — 01/02/2023 2:57 PM
+memory?
+insufficient threads available?
+the ticks zip file can be quite big
+there's room for improvement there by switching to processing the zip file streaming, but there's bigger fish to fry at the moment
+Boernaldo — 01/02/2023 2:58 PM
+oki, I will check.
+Boernaldo — 01/02/2023 3:07 PM
+Image
+dont know why, but with normal CMD it works. This VS-Code SSH connection is to heavy
+Hawkeye — 01/04/2023 9:53 PM
+@JMcrypto maybe nice to share the config here that you used for ETC play today? Maybe we could even add an example config file for these situations to the repo for easy use 
+JMcrypto — 01/04/2023 9:55 PM
+Oke you can ask @JordanM
+JordanM — 01/04/2023 9:56 PM
+"long":{
+            "enabled":true,
+            "strategy":"BigLongStrategy",
+            "mode":"NORMAL",
+            "wallet_exposure_ratio":0.5,
+            "strategy_config":{
+Expand
+config.txt
+3 KB
+Using this for months now haha
+JMcrypto — 01/04/2023 10:06 PM
+That config did a good job till now
+Playing it like a range 1, if breakes...make a x3 dca on a manual set range and a 3th if needed
+No losses so far
+SH-Stark — 09/04/2023 8:13 PM
+Lambo config if you ran it today only (strong downtrend):
+```
++---------------------------------------------------------+
+|                     Backtest summary                    |
++-----------------------------+---------------------------+
+| Metric                      |                     Value |
++-----------------------------+---------------------------+
+Expand
+message.txt
+4 KB
+{
+  "exchange": "binance",
+  "hedge_mode": true,
+  "symbol_configs": [
+    {
+      "symbol": [
+        "NMRUSDT"
+      ],
+      "exchange_leverage": 8,
+      "short": {
+        "enabled": true,
+        "strategy": "BigShortStrategy",
+        "mode": "NORMAL",
+        "wallet_exposure_ratio": 6,
+        "strategy_config": {
+          "entry_order_type": "MARKET",
+          "cancel_orders_on_position_close": true,
+          "limit_orders_reissue_threshold": 0.003,
+          "dca": {
+            "period": "12M",
+            "period_timeframe": "5m",
+            "algo": "LIN_PEAKS_TROUGHS_HIGHLOW",
+            "nr_clusters": 3,
+            "outer_price_distance": 0.07,
+            "ratio_power": 0.7
+          },
+          "tp": {
+            "minimum_tp": 0.002,
+            "maximum_tp_orders": 1,
+            "tp_interval": 0.001
+          }
+        }
+      }
+    }
+  ]
+}
+SH-Stark — 09/04/2023 8:14 PM
++50% profit, maxdrawdown -45% 
+risky shit btw :)
+Hawkeye — 09/04/2023 9:13 PM
+🙃
+Doftorul — 09/09/2023 2:57 AM
+backtest result 😄 ?
+hihihihihihi
+kids might grow one day
+if you;re that stupid to even contemplate looking at a backtest and infer a conculsion from that, that day is a loooong way in coming 
+SH-Stark — 09/09/2023 4:27 PM
+What would you propose my lord
+SH-Stark — 09/09/2023 4:27 PM
+This config was obviously a how-to-get-liquidated config 🙂 a TrOoL
+Hawkeye — 03/20/2024 3:13 PM
+@vsn is actively working with the HFT-configs, I've asked him to share a config every now & then when he makes updates; ofc in the end it's everybody's own responsibility what they're trading 🙂
+also, be aware there's a clear dinstiction between the HFT and the core which is HB really 🙂
+vsn — 03/20/2024 3:18 PM
+right now market has no volume unfortunately, but with FOMC in a few hours we should have some movement, will update on which config "should" be ran, I'm not responsible for any losses incurred 😂
+Hawkeye — 03/20/2024 8:41 PM
+one can use this as a starting point for a relative easier setup; it's not the HFT, but rather working on support/resistance levels. Surely people will have questions on the parameters, so fire away when you've got questions 🙂
+```json
+{
+  "hedge_mode": true,
+  "persisted_tick_purge_expiry_time": "5m",
+  "symbol_configs": [
+    {
+Expand
+message.txt
+3 KB
+Hawkeye — 03/21/2024 7:59 AM
+past month on 1WE
+Image
+that's a more stable setup for the longer term
+won't say it'll never get stuck, but it's a good one to run I think 🙂
+flyingtoaster — 03/21/2024 4:01 PM
+This one was fun 🙂
+Image
+or this lol was a starter
+Image
+Hawkeye — 03/21/2024 4:17 PM
+The results will vary on the coin & momentum
+But 100%+ a day is definitely possible on the right coin at the right moment
+Hawkeye — 03/22/2024 5:50 AM
+Results like above basically require a high leverage and high ratio power
+Anything below 1.4 will be too far from PA, you really to catch them wicks
+I’m thinking if it’ll help everyone understand the whole thing a bit better if I do a webinar about it for an hour or so, what do les everyone think?
+There’s a lot of things in the bot, and it can very quite overwhelming at first, but once you dive into it it really makes sense on what it does
+The strategies are open source, so everybody can read what it does basically
+giroman1 — 03/22/2024 5:53 AM
+I don't understand English well by ear, but maybe I can understand something visually
+Hawkeye — 03/22/2024 5:53 AM
+I know @vsn is laying low atm because of the market 🙂
+Hawkeye — 03/22/2024 5:54 AM
+No worries, you’re also always welcome to ask any questions in written form, I’m happy to answer them and writing them down will make it easier to read back on for other people too 
+Hawkeye — 03/22/2024 5:55 AM
+I think this config is a nice simple starting point to the bot, but keep in mind there’s much more to HB than just this, it can do ANYTHING trading wise basically
+Btw my timezone is CET, so I’m usually available between now and 14h from now 🙂
+Hawkeye — 03/22/2024 6:07 AM
+The outer price governs the width of the grid; in the example it’s set to a fixed grid width, but you can shady configure it to be automatically reach up to a support/resistance level within a certain range
+Apocalypse — 03/22/2024 7:36 AM
+I'd be interested in this
+Hawkeye — 03/22/2024 7:38 AM
+I'll see if I can find a timeslot in the very near future, need to check my schedule 🙂
+flyingtoaster — 03/29/2024 3:37 AM
+So this one is an example of how you could do long and short where the long exposure is higher and your probably going to hit liquidation before SL on the long side, but with the short side using a lower exposure you'll be stopped out to preserve capital. (this is risky, beware) 
+{
+  "hedge_mode": true,
+  "multicore": false,
+  "state_synchronize_interval_s": 5,
+  "initial_entry_block_ms": 11000,
+  "override_max_exposure_ratio_check": true,
+  "persisted_tick_purge_retain_count": 3000,
+  "plugins": {
+      "ProfitTransferPlugin": {
+          "profit_transfer_share": 0.10,
+          "transfer_interval": "30s",
+          "initial_lookback_period": "5m",
+          "transfer_type": "USDT_FUTURES_TO_SPOT"
+      }
+  },
+  "symbol_configs": [
+    {
+      "symbol": [
+        "RVNUSDT"
+      ],
+      "exchange_leverage": 12.5,
+      "long": {
+        "enabled": true,
+        "strategy": "BigLongStrategy",
+        "wallet_exposure_ratio": 10,
+        "tick_execution_interval_ms": 250,
+        "strategy_config": {
+          "entry_order_type": "LIMIT",
+          "limit_orders_reissue_threshold": 0.00001,
+          "hedge_pct_of_full_long_quantity": 0.8,
+          "repost_lower_allowed": false,
+          "dca": {
+            "period": "3D",
+            "period_timeframe": "1m",
+            "algo": "LINEAR",
+            "nr_clusters": 5,
+            "outer_price_distance": 0.049,
+            "ratio_power": 1.6,
+            "allow_add_new_smaller_dca": false
+          },
+          "tp": {
+            "minimum_tp": 0.0024
+          },
+          "stoploss": {
+            "enabled": true,
+            "last_entry_trigger_distance": 0.15,
+            "post_stoploss_mode": "NORMAL",
+            "order_type": "STOP"
+          },
+          "override_insufficient_grid_funds": true
+        }
+      },
+      "short": {
+          "enabled": true,
+          "strategy": "BigShortStrategy",
+          "wallet_exposure_ratio": 5,
+          "tick_execution_interval_ms": 250,
+          "strategy_config": {
+            "entry_order_type": "LIMIT",
+            "limit_orders_reissue_threshold": 0.00001,
+            "hedge_pct_of_full_long_quantity": 0.8,
+            "repost_lower_allowed": false,
+            "dca": {
+              "period": "3D",
+              "period_timeframe": "1m",
+              "algo": "LINEAR",
+              "nr_clusters": 5,
+              "outer_price_distance": 0.049,
+              "ratio_power": 1.6,
+              "allow_add_new_smaller_dca": false
+            },
+            "tp": {
+              "minimum_tp": 0.0024
+            },
+            "stoploss": {
+              "enabled": true,
+              "last_entry_trigger_distance": 0.15,
+              "post_stoploss_mode": "NORMAL",
+              "order_type": "STOP"
+            },
+            "override_insufficient_grid_funds": true
+        }
+      }
+    }
+  ]
+}
+Collapse
+message.txt
+3 KB
+Hawkeye — 03/29/2024 5:34 AM
+I expect you can’t run this with a rice money wallet of $50, seeing the width of the grid, nr of clusters & high ratio power…
+Hawkeye — 03/29/2024 6:20 AM
+RVN indeed seems a nice candidate atm
+flyingtoaster — 03/29/2024 6:42 AM
+Indeed, mmm like $300 balance I think you could
+MountainMystic — 03/29/2024 6:55 AM
+yeah rice money wont cut it. 500$ doesnt work 🙂
+flyingtoaster — 03/29/2024 12:32 PM
+Well, that config has overrides set so it actually does place orders with a $100 balance or so
+MountainMystic — 03/29/2024 2:03 PM
+Yeah. But it doesnt place the full Grid.
+vsn — 04/02/2024 3:39 PM
+I strongly advise against SL for the tight configs, altho 4.9% is pretty wide even with 5 orders, not gonna talk about shorting aswell... risking capital for very little gain while it can be used for the long side to print more, or simply have enough margin to dca.. the short side will liq sooner than later I'm afraid 
+Hawkeye — 04/02/2024 3:42 PM
+agree that shorting can be much more dangerous, I run it only for the sake of science 🙂
+vsn — 04/02/2024 3:44 PM
+4.9% too tight for shorting imo, should at least be a good 7%, green candles pop way too much and the retrace is very small compared to the opposite
+flyingtoaster — 04/02/2024 6:18 PM
+Oh I was reading this forgetting I had changed the params a bit, so long exposure 6 short exposure 2, total 8 with a tight stop on the short side typically with a high RP you do not fall out of range often with 5 levels and that grid span but obviously is going to vary and cannot be perfect really
+So if you do it that way, with those exposures; your short pos actually wont get liq'd; it gets stopped before liq
+But with those params above that I had posted indeed you would not reach short stop loss I believe pretty much based on exposures
+Short liq would hit first
+vsn — 04/02/2024 6:38 PM
+stops are your worst enemy
+wiser to just have enough margin to do a couple heavy dcas on the next levels and let it retrace, the odds of that happening are extremely high and you'll exponentially increase your gains, sure there's gonna be a lot more risk involved but worth it, stops will just endlessly bleed your wallet on the tight grids
+Hawkeye — 04/03/2024 9:21 PM
+{
+  "hedge_mode": true,
+  "initial_entry_ignore_not_found": true,
+  "override_max_exposure_ratio_check": true,
+  "persisted_tick_purge_retain_count": 3000,
+  "state_synchronize_interval_s": 5,
+  "dynamic_entry": {
+    "max_trades": 1,
+    "enabled": true,
+    "dynamic_entry_sweep_frequency": "30s",
+    "filters": [
+      {
+        "filter": "AgeFilter",
+        "config": {
+          "older_than": "5D",
+          "newer_than": "1Y"
+        }
+      },
+      {
+        "filter": "SymbolFilter",
+        "config": {
+          "whitelist": [".*USDT"],
+          "blacklist": ["BTCUSDT", "ETHUSDT", "SOLUSDT", "RVNUSDT"]
+        }
+      },
+      {
+        "filter": "RandomizerFilter"
+      },
+      {
+        "filter": "SubListFilter",
+        "config": {
+          "size": 1
+        }
+      }
+    ],
+    "symbol_config_template": {
+      "long": {
+        "enabled": true,
+        "strategy": "BigLongStrategy",
+        "wallet_exposure_ratio": 0.00001,
+        "strategy_config": {
+          "entry_order_type": "LIMIT",
+          "limit_orders_reissue_threshold": 0.00001,
+          "repost_lower_allowed": false,
+          "dca": {
+            "period": "3D",
+            "period_timeframe": "1m",
+            "algo": "LINEAR",
+            "nr_clusters": 5,
+            "outer_price_distance": 0.042,
+            "ratio_power": 1.5,
+            "allow_add_new_smaller_dca": false
+          },
+          "tp": {
+            "minimum_tp": 0.0025
+          }
+        }
+      }
+    }
+  }
+}
+just made a push, this is an example of specifying dynamic symbol entry selection
+﻿
+{
+  "hedge_mode": true,
+  "multicore": false,
+  "state_synchronize_interval_s": 5,
+  "initial_entry_block_ms": 11000,
+  "override_max_exposure_ratio_check": true,
+  "persisted_tick_purge_retain_count": 3000,
+  "plugins": {
+      "ProfitTransferPlugin": {
+          "profit_transfer_share": 0.10,
+          "transfer_interval": "30s",
+          "initial_lookback_period": "5m",
+          "transfer_type": "USDT_FUTURES_TO_SPOT"
+      }
+  },
+  "symbol_configs": [
+    {
+      "symbol": [
+        "RVNUSDT"
+      ],
+      "exchange_leverage": 12.5,
+      "long": {
+        "enabled": true,
+        "strategy": "BigLongStrategy",
+        "wallet_exposure_ratio": 10,
+        "tick_execution_interval_ms": 250,
+        "strategy_config": {
+          "entry_order_type": "LIMIT",
+          "limit_orders_reissue_threshold": 0.00001,
+          "hedge_pct_of_full_long_quantity": 0.8,
+          "repost_lower_allowed": false,
+          "dca": {
+            "period": "3D",
+            "period_timeframe": "1m",
+            "algo": "LINEAR",
+            "nr_clusters": 5,
+            "outer_price_distance": 0.049,
+            "ratio_power": 1.6,
+            "allow_add_new_smaller_dca": false
+          },
+          "tp": {
+            "minimum_tp": 0.0024
+          },
+          "stoploss": {
+            "enabled": true,
+            "last_entry_trigger_distance": 0.15,
+            "post_stoploss_mode": "NORMAL",
+            "order_type": "STOP"
+          },
+          "override_insufficient_grid_funds": true
+        }
+      },
+      "short": {
+          "enabled": true,
+          "strategy": "BigShortStrategy",
+          "wallet_exposure_ratio": 5,
+          "tick_execution_interval_ms": 250,
+          "strategy_config": {
+            "entry_order_type": "LIMIT",
+            "limit_orders_reissue_threshold": 0.00001,
+            "hedge_pct_of_full_long_quantity": 0.8,
+            "repost_lower_allowed": false,
+            "dca": {
+              "period": "3D",
+              "period_timeframe": "1m",
+              "algo": "LINEAR",
+              "nr_clusters": 5,
+              "outer_price_distance": 0.049,
+              "ratio_power": 1.6,
+              "allow_add_new_smaller_dca": false
+            },
+            "tp": {
+              "minimum_tp": 0.0024
+            },
+            "stoploss": {
+              "enabled": true,
+              "last_entry_trigger_distance": 0.15,
+              "post_stoploss_mode": "NORMAL",
+              "order_type": "STOP"
+            },
+            "override_insufficient_grid_funds": true
+        }
+      }
+    }
+  ]
+}
+message.txt
+3 KB
