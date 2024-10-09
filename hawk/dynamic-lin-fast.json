@@ -1,0 +1,331 @@
+{
+    "multicore": true,
+    "orderbook_used": false,
+    "hedge_mode": true,
+    "persisted_tick_purge_retain_count": 3000,
+    "initial_entry_search_attempts": 5,
+    "state_synchronize_interval_s": 5,
+    "initial_entry_ignore_not_found": true,
+    "override_max_exposure_ratio_check": true,
+    "plugins": {
+        "MultiAutoreducePlugin": {
+            "reduce_interval": "12H",
+            "profit_percentage_used_for_reduction": 0.1,
+            "activate_above_upnl_pct": -50,
+            "max_age_income": "1D"
+        },
+        "ProfitTransferPlugin": {
+            "transfer_all_above": 10,
+            "transfer_interval": "1H",
+            "initial_lookback_period": "2H",
+            "transfer_type": "USDT_FUTURES_TO_SPOT"
+        }
+    },
+    "dynamic_entry": {
+        "max_positions": 4,
+        "enabled": true,
+        "dynamic_entry_sweep_frequency": "15m",
+        "filters": [
+            {
+                "filter": "SymbolFilter",
+                "config": {
+                    "whitelist": [
+                        ".*USDT"
+                    ],
+                    "blacklist": [
+                        "LISTAUSDT",
+                        "TURBOUSDT",
+                        "AAVEUSDT",
+                        "AGIXUSDT",
+                        "OCEANUSDT",
+                        "BTCUSDT",
+                        "ETHUSDT",
+                        "SOLUSDT",
+                        "BTCDOMUSDT",
+                        "EURUSDT",
+                        "GBPUSDT",
+                        "JPYUSDT",
+                        "USDUSDT",
+                        "BUSDUSDT",
+                        "USDCUSDT",
+                        ".*DOWN/.*",
+                        ".*UP/.*",
+                        "1000.*",
+                        "1EARTHUSDT",
+                        "ILAUSDT",
+                        "BOBAUSDT",
+                        "CWARUSDT",
+                        "OMGUSDT",
+                        "DMTRUSDT",
+                        "MLSUSDT",
+                        "TORNUSDT",
+                        "LUNAUSDT",
+                        "BTSUSDT",
+                        "QKCUSDT",
+                        "ACAUSDT",
+                        "FTTUSDT",
+                        "SRMUSDT",
+                        "YFIIUSDT",
+                        "SNMUSDT",
+                        "ANCUSDT",
+                        "AIONUSDT",
+                        "MIRUSDT",
+                        "WABIUSDT",
+                        "QLCUSDT",
+                        "NEBLUSDT",
+                        "AUTOUSDT",
+                        "VGXUSDT",
+                        "DREPUSDT",
+                        "PNTUSDT",
+                        "PERLUSDT",
+                        "LOOMUSDT",
+                        "IDUSDT",
+                        "NULSUSDT",
+                        "TOMOUSDT",
+                        "WTCUSDT",
+                        "1000SATSUSDT",
+                        "ORDIUSDT",
+                        "XMRUSDT",
+                        "ANTUSDT",
+                        "MULTIUSDT",
+                        "VAIUSDT",
+                        "DREPUSDT",
+                        "MOBUSDT",
+                        "PNTUSDT",
+                        "BTCDOMUSDT",
+                        "WAVESUSDT",
+                        "WNXMUSDT",
+                        "XEMUSDT",
+                        "ZECUSDT",
+                        "ELFUSDT",
+                        "ARKUSDT",
+                        "MDXUSDT",
+                        "BETAUSDT",
+                        "KP3RUSDT",
+                        "AKROUSDT",
+                        "AMBUSDT",
+                        "BONDUSDT",
+                        "FIROUSDT",
+                        "OAXUSDT",
+                        "EPXUSDT",
+                        "OOKIUSDT",
+                        "ONDOUSDT",
+                        "TRUMPUSDT",
+                        "MAGAUSDT",
+                        "MAGAETHUSDT",
+                        "TREMPUSDT",
+                        "BODENUSDT",
+                        "STRUMPUSDT",
+                        "TOOKERUSDT",
+                        "TMANIAUSDT",
+                        "BOBBYUSDT",
+                        "BABYTRUMPUSDT",
+                        "PTTRUMPUSDT",
+                        "DTIUSDT",
+                        "TRUMPIEUSDT",
+                        "MAGAPEPEUSDT",
+                        "PEPEMAGAUSDT",
+                        "HARDUSDT",
+                        "MBLUSDT",
+                        "GALUSDT",
+                        "DOCKUSDT",
+                        "POLSUSDT",
+                        "CTXCUSDT",
+                        "JASMYUSDT",
+                        "CVXUSDT",
+                        "BALUSDT",
+                        "SUNUSDT",
+                        "SNTUSDT",
+                        "CREAMUSDT",
+                        "RENUSDT",
+                        "LINAUSDT",
+                        "REEFUSDT",
+                        "UNFIUSDT",
+                        "IRISUSDT",
+                        "CVPUSDT",
+                        "ACMUSDT",
+                        "AFAUSDT",
+                        "ALAUSDT",
+                        "ALLUSDT",
+                        "ALPINEUSDT",
+                        "APLUSDT",
+                        "ASRUSDT",
+                        "ATMUSDT",
+                        "BARUSDT",
+                        "CAIUSDT",
+                        "CHZUSDT",
+                        "CITYUSDT",
+                        "FORUSDT",
+                        "GALUSDT",
+                        "GOZUSDT",
+                        "IBFKUSDT",
+                        "JUVUSDT",
+                        "LEGUSDT",
+                        "LOCK-1USDT",
+                        "NAVIUSDT",
+                        "NMRUSDT",
+                        "NOVUSDT",
+                        "PFLUSDT",
+                        "PSGUSDT",
+                        "ROUSHUSDT",
+                        "STVUSDT",
+                        "THUSDT",
+                        "TRAUSDT",
+                        "UCHUSDT",
+                        "UFCUSDT",
+                        "YBOUSDT"
+                    ]
+                }
+            },
+            {
+                "filter": "MinNotionalFilter",
+                "config": {
+                    "less_than": 10
+                }
+            },
+            {
+                "filter": "AgeFilter",
+                "config": {
+                    "older_than": "30D"
+                }
+            },
+            {
+                "filter": "Last24hVolumeFilter",
+                "config": {
+                    "sort": "desc",
+                    "top": 100
+                }
+            },
+            {
+                "filter": "Last24hPriceChangePctFilter",
+                "config": {
+                    "sort": "desc",
+                    "sort_absolute": true,
+                    "top": 15
+                }
+            },
+            {
+                "filter": "RandomizerFilter"
+            }
+        ],
+        "symbol_config_template": {
+            "exchange_leverage": 5,
+            "long": {
+                "enabled": true,
+                "strategy": "BigLongStrategy",
+                "tick_execution_interval_ms": 250,
+                "mode": "NORMAL",
+                "wallet_exposure_ratio": 0.1,
+                "strategy_config": {
+                    "entry_order_type": "LIMIT",
+                    "cancel_orders_on_position_close": true,
+                    "limit_orders_reissue_threshold": 0.003,
+                    "repost_lower_allowed": true,
+                    "dca": {
+                        "period": "1M",
+                        "period_timeframe": "1m",
+                        "algo": "LINEAR",
+                        "nr_clusters": 5,
+                        "outer_price_level_nr": 1,
+                        "outer_price_period": "3M",
+                        "outer_price_timeframe": "5m",
+                        "outer_price_nr_clusters": 10,
+                        "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
+                        "minimum_distance_to_outer_price": 0.04,
+                        "ratio_power": 1.3, //governs the quantity of each subsequent DCA order. Setting this to a higher value will bring the position price closer when a DCA is filled, at the expense of the first orders being smaller
+                        "allow_add_new_smaller_dca": false,
+                        //                      "outer_price_distance": 0.084,
+                    },
+                    "tp": {
+                        "minimum_tp": 0.10,
+                        "trailing_enabled": true,
+                        "trailing_activation_distance_from_position_price": 0.020,
+                        "trailing_trigger_distance_from_current_price": 0.00215,
+                        "trailing_execution_distance_price_steps": 3,
+                        "trailing_shift_threshold": 0.002
+                    },
+                    "hedge": {
+                        "activate_hedge_above_wallet_exposure_pct": 35,
+                        "dca_config": {
+                        "period": "3M",
+                        "period_timeframe": "1m",
+                        "algo": "IMMEDIATE_LINEAR",
+                        "nr_clusters": 5,
+                        "outer_price_distance_from_opposite_position": 0.02,
+                        "ratio_power": 0.55
+                        }
+                    },
+                    // "wiggle": {
+                    //     "enabled": true,
+                    //     "activate_on_stuck": true,
+                    //     "decrease_size": 0.05, // Decrease position size by 1%; only set one of 'decrease_size' or 'decrease_coin_size'
+                    //     //"decrease_coin_size":,
+                    //     "increase_size": 0.1, // Increase position size by 1%; only set one of 'increase_size' or 'increase_coin_size'
+                    //     //"increase_coin_size":,
+                    //     // "force_exit_position_price_distance":0.05, // Forces exit if price moves within 5% of entry price
+                    //     // "force_exit_position_quantity_below":0.001,// Forces exit if position size drops below this quantity
+                    //     // "force_exit_position_wallet_exposure_distance_below":0.10, // Forces exit if position cost is within 10% of max wallet exposure
+                    //     "mode_after_closing": "NORMAL", // Mode after closing position; options might include "NORMAL", "OFF", etc.
+                    //     //"tp_on_profit": true,
+                    //     "period": "12M", // Required: Period for support/resistance analysis (e.g., "12M" for 12 months)
+                    //     "timeframe": "15m", // Required: Timeframe for support/resistance (e.g., "15m" for 15 minutes)
+                    //     "algo": "PEAKS_TROUGHS_HIGHLOW",
+                    //     "wiggle_on_tick": false,
+                    //     "wiggle_execution_delay_ms": 2500 // Delay between wiggle executions in milliseconds to prevent rapid re-execution
+                    // }
+                }
+            },
+            "short": {
+                "enabled": false,
+                "strategy": "BigShortStrategy",
+                "tick_execution_interval_ms": 250,
+                "mode": "NORMAL",
+                "wallet_exposure_ratio": 0.035,
+                "strategy_config": {
+                    "entry_order_type": "LIMIT",
+                    "cancel_orders_on_position_close": true,
+                    "limit_orders_reissue_threshold": 0.003,
+                    "repost_lower_allowed": true,
+                    "dca": {
+                        "period": "12M",
+                        "period_timeframe": "15m",
+                        "algo": "LIN_PEAKS_TROUGHS_HIGHLOW",
+                        "nr_clusters": 5,
+                        "outer_price_level_nr": 1,
+                        "outer_price_period": "24M",
+                        "outer_price_timeframe": "4H",
+                        "outer_price_nr_clusters": 3,
+                        "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
+                        "minimum_distance_to_outer_price": 0.38,
+                        "ratio_power": 0.65,
+                        "allow_add_new_smaller_dca": true
+                    },
+                    "tp": {
+                        "minimum_tp": 0.05,
+                        "trailing_enabled": true,
+                        "trailing_activation_distance_from_position_price": 0.0145,
+                        "trailing_trigger_distance_from_current_price": 0.0115,
+                        "trailing_execution_distance_price_steps": 3,
+                        "trailing_shift_threshold": 0.002
+                    },
+                    "hedge": {
+                        "activate_hedge_above_upnl_pct": 50,
+                        "dca_config": {
+                            "period": "3M",
+                            "period_timeframe": "1H",
+                            "algo": "LIN_PEAKS_TROUGHS_HIGHLOW",
+                            "nr_clusters": 5,
+                            "outer_price_level_nr": 1,
+                            "outer_price_period": "24M",
+                            "outer_price_timeframe": "1H",
+                            "outer_price_nr_clusters": 3,
+                            "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
+                            "minimum_distance_to_outer_price": 0.225,
+                            "ratio_power": 0.675
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
