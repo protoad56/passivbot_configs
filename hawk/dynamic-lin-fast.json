@@ -216,7 +216,7 @@
                     "limit_orders_reissue_threshold": 0.003,
                     "repost_lower_allowed": true,
                     "dca": {
-                        "period": "1M",
+                        "period": "3D",
                         "period_timeframe": "1m",
                         "algo": "LINEAR",
                         "nr_clusters": 4,
@@ -281,18 +281,19 @@
                     "limit_orders_reissue_threshold": 0.003,
                     "repost_lower_allowed": true,
                     "dca": {
-                        "period": "12M",
-                        "period_timeframe": "15m",
-                        "algo": "LIN_PEAKS_TROUGHS_HIGHLOW",
-                        "nr_clusters": 5,
+                        "period": "1M",
+                        "period_timeframe": "1m",
+                        "algo": "LINEAR",
+                        "nr_clusters": 4,
                         "outer_price_level_nr": 1,
-                        "outer_price_period": "24M",
-                        "outer_price_timeframe": "4H",
-                        "outer_price_nr_clusters": 3,
+                        "outer_price_period": "3M",
+                        "outer_price_timeframe": "5m",
+                        "outer_price_nr_clusters": 5,
                         "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
-                        "minimum_distance_to_outer_price": 0.38,
-                        "ratio_power": 0.65,
-                        "allow_add_new_smaller_dca": true
+                        "minimum_distance_to_outer_price": 0.04,
+                        "ratio_power": 1.3, //governs the quantity of each subsequent DCA order. Setting this to a higher value will bring the position price closer when a DCA is filled, at the expense of the first orders being smaller
+                        "allow_add_new_smaller_dca": false,
+                        //                      "outer_price_distance": 0.084,
                     },
                     "tp": {
                         "minimum_tp": 0.05,
