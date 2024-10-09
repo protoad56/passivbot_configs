@@ -209,7 +209,7 @@
             }
         ],
         "symbol_config_template": {
-            "exchange_leverage": "MAX",
+            "exchange_leverage": 5,
             "long": {
                 "enabled": true,
                 "strategy": "BigLongStrategy",
@@ -245,14 +245,16 @@
                         "trailing_shift_threshold": 0.002
                     },
                     "hedge": {
-                        "activate_hedge_above_wallet_exposure_pct": 20,
+                        "activate_hedge_above_wallet_exposure_pct": 35,
                         "dca_config": {
-                            "algo": "LINEAR",
-                            "ratio_power": 1.4,
-                            "nr_clusters": 4,
-                            "outer_price_distance": 0.04
+                        "period": "3M",
+                        "period_timeframe": "1m",
+                        "algo": "IMMEDIATE_LINEAR",
+                        "nr_clusters": 5,
+                        "outer_price_distance_from_opposite_position": 0.02,
+                        "ratio_power": 0.55
                         }
-                    }
+                    },
                     // "wiggle": {
                     //     "enabled": true,
                     //     "activate_on_stuck": true,
