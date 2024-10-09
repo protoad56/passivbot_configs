@@ -13,16 +13,10 @@
             "profit_percentage_used_for_reduction": 0.1,
             "activate_above_upnl_pct": -50,
             "max_age_income": "1D"
-        },
-        "ProfitTransferPlugin": {
-            "transfer_all_above": 10,
-            "transfer_interval": "1H",
-            "initial_lookback_period": "2H",
-            "transfer_type": "USDT_FUTURES_TO_SPOT"
         }
     },
     "dynamic_entry": {
-        "max_positions": 4,
+        "max_positions": 5,
         "enabled": true,
         "dynamic_entry_sweep_frequency": "15m",
         "filters": [
