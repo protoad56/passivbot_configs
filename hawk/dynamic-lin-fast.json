@@ -216,27 +216,27 @@
                     "limit_orders_reissue_threshold": 0.003,
                     "repost_lower_allowed": true,
                     "dca": {
-                        "period": "3D",
+                        "period": "1M",
                         "period_timeframe": "1m",
                         "algo": "LINEAR",
                         "nr_clusters": 4,
                         "outer_price_level_nr": 1,
-                        "outer_price_period": "3M",
-                        "outer_price_timeframe": "5m",
-                        "outer_price_nr_clusters": 5,
-                        "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
-                        "minimum_distance_to_outer_price": 0.03,
-                        "ratio_power": 1.3, //governs the quantity of each subsequent DCA order. Setting this to a higher value will bring the position price closer when a DCA is filled, at the expense of the first orders being smaller
+                        // "outer_price_period": "3M",
+                        // "outer_price_timeframe": "5m",
+                        // "outer_price_nr_clusters": 5,
+                        // "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
+                        // "minimum_distance_to_outer_price": 0.04,
+                        "ratio_power": 1.6, //governs the quantity of each subsequent DCA order. Setting this to a higher value will bring the position price closer when a DCA is filled, at the expense of the first orders being smaller
                         "allow_add_new_smaller_dca": false,
-                        //                      "outer_price_distance": 0.084,
+                        "outer_price_distance": 0.0,
                     },
                     "tp": {
-                        "minimum_tp": 0.10,
-                        "trailing_enabled": true,
-                        "trailing_activation_distance_from_position_price": 0.020,
-                        "trailing_trigger_distance_from_current_price": 0.00215,
-                        "trailing_execution_distance_price_steps": 3,
-                        "trailing_shift_threshold": 0.002
+                        "minimum_tp": 0.0025,
+                        // "trailing_enabled": true,
+                        // "trailing_activation_distance_from_position_price": 0.020,
+                        // "trailing_trigger_distance_from_current_price": 0.00215,
+                        // "trailing_execution_distance_price_steps": 3,
+                        // "trailing_shift_threshold": 0.002
                     },
                     "hedge": {
                         "activate_hedge_above_wallet_exposure_pct": 35,
@@ -270,7 +270,7 @@
                 }
             },
             "short": {
-                "enabled": false,
+                "enabled": true,
                 "strategy": "BigShortStrategy",
                 "tick_execution_interval_ms": 250,
                 "mode": "NORMAL",
@@ -286,22 +286,22 @@
                         "algo": "LINEAR",
                         "nr_clusters": 4,
                         "outer_price_level_nr": 1,
-                        "outer_price_period": "3M",
-                        "outer_price_timeframe": "5m",
-                        "outer_price_nr_clusters": 5,
-                        "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
-                        "minimum_distance_to_outer_price": 0.04,
-                        "ratio_power": 1.3, //governs the quantity of each subsequent DCA order. Setting this to a higher value will bring the position price closer when a DCA is filled, at the expense of the first orders being smaller
+                        // "outer_price_period": "3M",
+                        // "outer_price_timeframe": "5m",
+                        // "outer_price_nr_clusters": 5,
+                        // "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
+                        // "minimum_distance_to_outer_price": 0.04,
+                        "ratio_power": 1.6, //governs the quantity of each subsequent DCA order. Setting this to a higher value will bring the position price closer when a DCA is filled, at the expense of the first orders being smaller
                         "allow_add_new_smaller_dca": false,
-                        //                      "outer_price_distance": 0.084,
+                        "outer_price_distance": 0.0,
                     },
                     "tp": {
-                        "minimum_tp": 0.05,
-                        "trailing_enabled": true,
-                        "trailing_activation_distance_from_position_price": 0.0145,
-                        "trailing_trigger_distance_from_current_price": 0.0115,
-                        "trailing_execution_distance_price_steps": 3,
-                        "trailing_shift_threshold": 0.002
+                        "minimum_tp": 0.0025,
+                        // "trailing_enabled": true,
+                        // "trailing_activation_distance_from_position_price": 0.0145,
+                        // "trailing_trigger_distance_from_current_price": 0.0115,
+                        // "trailing_execution_distance_price_steps": 3,
+                        // "trailing_shift_threshold": 0.002
                     },
                     "hedge": {
                         "activate_hedge_above_upnl_pct": 50,
