@@ -209,7 +209,7 @@
                 "strategy": "BigLongStrategy",
                 "tick_execution_interval_ms": 250,
                 "mode": "NORMAL",
-                "wallet_exposure_ratio": 0.1,
+                "wallet_exposure_ratio": 0.5,
                 "strategy_config": {
                     "entry_order_type": "LIMIT",
                     "cancel_orders_on_position_close": true,
@@ -219,7 +219,7 @@
                         "period": "1M",
                         "period_timeframe": "1m",
                         "algo": "LINEAR",
-                        "nr_clusters": 5,
+                        "nr_clusters": 4,
                         "outer_price_level_nr": 1,
                         "outer_price_period": "3M",
                         "outer_price_timeframe": "5m",
