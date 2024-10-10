@@ -228,7 +228,7 @@
                         // "minimum_distance_to_outer_price": 0.04,
                         "ratio_power": 1.6, //governs the quantity of each subsequent DCA order. Setting this to a higher value will bring the position price closer when a DCA is filled, at the expense of the first orders being smaller
                         "allow_add_new_smaller_dca": false,
-                        "outer_price_distance": 0.0,
+                        "outer_price_distance": 0.042,
                     },
                     "tp": {
                         "minimum_tp": 0.0025,
@@ -293,7 +293,7 @@
                         // "minimum_distance_to_outer_price": 0.04,
                         "ratio_power": 1.6, //governs the quantity of each subsequent DCA order. Setting this to a higher value will bring the position price closer when a DCA is filled, at the expense of the first orders being smaller
                         "allow_add_new_smaller_dca": false,
-                        "outer_price_distance": 0.0,
+                        "outer_price_distance": 0.042,
                     },
                     "tp": {
                         "minimum_tp": 0.0025,
