@@ -209,7 +209,7 @@
             }
         ],
         "symbol_config_template": {
-            "exchange_leverage": 5,
+            "exchange_leverage": 10,
             "long": {
                 "enabled": true,
                 "strategy": "BigLongStrategy",
