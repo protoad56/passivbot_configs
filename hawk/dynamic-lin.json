@@ -22,7 +22,7 @@
         // }
     },
     "dynamic_entry": {
-        "max_positions": 7,
+        "max_positions": 10,
         "enabled": true,
         "dynamic_entry_sweep_frequency": "5m",
         "filters": [
