@@ -168,36 +168,54 @@ class LogMonitor(pyinotify.ProcessEvent):
             text = message['text'].strip()
             if str(chat_id) == CHAT_ID:
                 if text.startswith('/add_keyword'):
-                    keyword = text[len('/add_keyword'):].strip()
-                    if keyword and keyword not in self.keywords:
-                        # Assign a default emoji or prompt for one
-                        self.keywords[keyword] = '🔹'  # Default emoji
-                        self.send_telegram_message(f"Keyword '{keyword}' added with default emoji.")
+                    parts = text[len('/add_keyword'):].strip().split()
+                    if len(parts) >= 1:
+                        keyword = parts[0]
+                        emoji = parts[1] if len(parts) > 1 else '🔹'  # Default emoji
+                        if keyword not in self.keywords:
+                            self.keywords[keyword] = emoji
+                            self.send_telegram_message(f"Keyword '{keyword}' added with emoji '{emoji}'.")
+                        else:
+                            self.send_telegram_message(f"Keyword '{keyword}' already exists.")
+                    else:
+                        self.send_telegram_message("Usage: /add_keyword [keyword] [emoji]")
                 elif text.startswith('/remove_keyword'):
                     keyword = text[len('/remove_keyword'):].strip()
                     if keyword in self.keywords:
                         del self.keywords[keyword]
                         self.send_telegram_message(f"Keyword '{keyword}' removed.")
+                    else:
+                        self.send_telegram_message(f"Keyword '{keyword}' not found.")
                 elif text.startswith('/list_keywords'):
-                    keywords = ', '.join([f"{emoji} {kw}" for kw, emoji in self.keywords.items()])
-                    self.send_telegram_message(f"Current keywords: {keywords}")
+                    if self.keywords:
+                        keywords = ', '.join([f"{emoji} {kw}" for kw, emoji in self.keywords.items()])
+                        self.send_telegram_message(f"Current keywords: {keywords}")
+                    else:
+                        self.send_telegram_message("No keywords set.")
                 elif text.startswith('/add_ignore'):
                     keyword = text[len('/add_ignore'):].strip()
                     if keyword and keyword not in self.ignore_keywords:
                         self.ignore_keywords.append(keyword)
                         self.send_telegram_message(f"Ignore keyword '{keyword}' added.")
+                    else:
+                        self.send_telegram_message(f"Ignore keyword '{keyword}' already exists or invalid.")
                 elif text.startswith('/remove_ignore'):
                     keyword = text[len('/remove_ignore'):].strip()
                     if keyword in self.ignore_keywords:
                         self.ignore_keywords.remove(keyword)
                         self.send_telegram_message(f"Ignore keyword '{keyword}' removed.")
+                    else:
+                        self.send_telegram_message(f"Ignore keyword '{keyword}' not found.")
                 elif text.startswith('/list_ignores'):
-                    keywords = ', '.join(self.ignore_keywords)
-                    self.send_telegram_message(f"Current ignore keywords: {keywords}")
+                    if self.ignore_keywords:
+                        keywords = ', '.join(self.ignore_keywords)
+                        self.send_telegram_message(f"Current ignore keywords: {keywords}")
+                    else:
+                        self.send_telegram_message("No ignore keywords set.")
                 else:
                     self.send_telegram_message(
                         "Available commands:\n"
-                        "/add_keyword [keyword]\n"
+                        "/add_keyword [keyword] [emoji]\n"
                         "/remove_keyword [keyword]\n"
                         "/list_keywords\n"
                         "/add_ignore [keyword]\n"
