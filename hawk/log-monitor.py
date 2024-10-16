@@ -10,22 +10,32 @@ import html
 
 # Configuration
 LOG_FILE = '/root/hawkbot/logs/hawkbot.log'   # Update with your hawkbot.log path
-KEYWORDS = ['WARNING', 'ERROR', 'your_keyword']  # Update with your keywords
+# Map keywords to their corresponding emojis
+KEYWORDS = {
+    'ERROR': '🔴',    # Red circle for ERROR
+    'WARNING': '🟡',  # Yellow circle for WARNING
+    'INFO': '🔵',      # Blue circle for INFO
+    'reduce':'🥹',
+    'hedge':'😤'
+}
+
+IGNORE_KEYWORDS = ['dca_plugin']  # Keywords to ignore
 TELEGRAM_TOKEN = '7686131500:AAEWuaYOLynEoSyNEJkiOXI5EpNkHDg5dl4'        # Update with your bot's API token
 CHAT_ID = '6757461113'                 # Update with your chat ID
 
 class LogMonitor(pyinotify.ProcessEvent):
-    def __init__(self, logfile, keywords):
+    def __init__(self, logfile, keywords, ignore_keywords):
         self.logfile = logfile
-        self.keywords = keywords
+        self.keywords = keywords  # Now a dictionary
+        self.ignore_keywords = ignore_keywords
         self.last_lines = deque(maxlen=5)
         self._open_log_file()
-        
+            
     def _open_log_file(self):
         self.file = open(self.logfile, 'r')
         self.file.seek(0, os.SEEK_END)
         self.position = self.file.tell()
-        
+            
     def send_telegram_message(self, message):
         url = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage'
         payload = {
@@ -41,17 +51,17 @@ class LogMonitor(pyinotify.ProcessEvent):
             print(f"Telegram send failed: {e}\nError: {error_message}\nMessage: {message}")
         except requests.exceptions.RequestException as e:
             print(f"Telegram send failed: {e}")
-
+            
     def process_IN_MODIFY(self, event):
         self._read_new_lines()
-        
+            
     def process_IN_MOVE_SELF(self, event):
         # Log file has been rotated
         self.file.close()
-        time.sleep(2)  # Wait a moment for the new file to be created
+        time.sleep(1)  # Wait a moment for the new file to be created
         self._open_log_file()
         self._read_new_lines()
-        
+            
     def _read_new_lines(self):
         self.file.seek(self.position)
         while True:
@@ -60,14 +70,68 @@ class LogMonitor(pyinotify.ProcessEvent):
                 break
             line = line.rstrip()
             self.last_lines.append(line)
-            if any(keyword.lower() in line.lower() for keyword in self.keywords):
+            # Check if the line contains any of the alert keywords
+            matched_keyword = None
+            for keyword in self.keywords:
+                if keyword.lower() in line.lower():
+                    matched_keyword = keyword
+                    break
+            if matched_keyword:
+                # Check if the line contains any of the ignore keywords
+                if any(ignore_keyword.lower() in line.lower() for ignore_keyword in self.ignore_keywords):
+                    # Skip this line and continue
+                    continue
+                else:
+                    # Line contains alert keyword and does not contain ignore keyword
+                    lines_to_send = list(self.last_lines)
+                    # Highlight keywords in the lines
+                    lines_to_send = [self._highlight_keywords(l, matched_keyword) for l in lines_to_send]
+                    message = '\n'.join(lines_to_send)
+                    self.send_telegram_message(message)
+                    self.last_lines.clear()
+        self.position = self.file.tell()
+        
+    def _highlight_keywords(self, text, matched_keyword):
+        import re
+        import html
+
+        # Escape the text for HTML
+        escaped_text = html.escape(text)
+
+        # Get the emoji for the matched keyword
+        emoji = self.keywords.get(matched_keyword, '')
+
+        # Replace the keyword with bold formatting and emoji
+        # Ensure case-insensitive replacement
+        pattern = re.compile(re.escape(matched_keyword), re.IGNORECASE)
+        replacement = f"{emoji} <b>{matched_keyword}</b>"
+        escaped_text = pattern.sub(replacement, escaped_text)
+        return escaped_text
+        
+def _read_new_lines(self):
+    self.file.seek(self.position)
+    while True:
+        line = self.file.readline()
+        if not line:
+            break
+        line = line.rstrip()
+        self.last_lines.append(line)
+        # Check if the line contains any of the alert keywords
+        if any(keyword.lower() in line.lower() for keyword in self.keywords):
+            # Check if the line contains any of the ignore keywords
+            if any(ignore_keyword.lower() in line.lower() for ignore_keyword in self.ignore_keywords):
+                # Skip this line and continue
+                continue
+            else:
+                # Line contains alert keyword and does not contain ignore keyword
                 lines_to_send = list(self.last_lines)
                 # Highlight keywords in the lines
                 lines_to_send = [self._highlight_keywords(l) for l in lines_to_send]
                 message = '\n'.join(lines_to_send)
                 self.send_telegram_message(message)
                 self.last_lines.clear()
-        self.position = self.file.tell()
+    self.position = self.file.tell()
+
 
     def _highlight_keywords(self, text):
         # Escape the text for HTML
@@ -122,12 +186,11 @@ class LogMonitor(pyinotify.ProcessEvent):
                                                "/add_keyword [keyword]\n"
                                                "/remove_keyword [keyword]\n"
                                                "/list_keywords")
-
 def monitor_log_file():
     wm = pyinotify.WatchManager()
     mask = pyinotify.IN_MODIFY | pyinotify.IN_MOVE_SELF
 
-    log_monitor = LogMonitor(LOG_FILE, KEYWORDS)
+    log_monitor = LogMonitor(LOG_FILE, KEYWORDS, IGNORE_KEYWORDS)
     notifier = pyinotify.Notifier(wm, log_monitor)
     wm.add_watch(LOG_FILE, mask)
 
@@ -141,6 +204,7 @@ def monitor_log_file():
     except KeyboardInterrupt:
         notifier.stop()
         log_monitor.file.close()
+
 
 if __name__ == "__main__":
     monitor_log_file()
