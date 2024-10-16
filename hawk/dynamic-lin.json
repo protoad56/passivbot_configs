@@ -9,9 +9,9 @@
     "override_max_exposure_ratio_check": true,
     "plugins": {
         "MultiAutoreducePlugin": {
-            "reduce_interval": "12H",
-            "profit_percentage_used_for_reduction": 0.1,
-            "activate_above_upnl_pct": 50,
+            "reduce_interval": "6H",
+            "profit_percentage_used_for_reduction": 0.05,
+            "activate_above_upnl_pct": 35,
             "max_age_income": "1D"
         },
         // "ProfitTransferPlugin": {
@@ -245,7 +245,7 @@
                         "trailing_shift_threshold": 0.002
                     },
                     "hedge": {
-                        "activate_hedge_above_wallet_exposure_pct": 35,
+                        "activate_hedge_above_wallet_exposure_pct": 25,
                         "dca_config": {
                         "period": "3M",
                         "period_timeframe": "1m",
