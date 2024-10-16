@@ -18,7 +18,7 @@ KEYWORDS = {
     'hedge':'😤'
 }
 
-IGNORE_KEYWORDS = []  # Keywords to ignore
+IGNORE_KEYWORDS = ['dca_plugin']  # Keywords to ignore
 TELEGRAM_TOKEN = '7686131500:AAEWuaYOLynEoSyNEJkiOXI5EpNkHDg5dl4'        # Update with your bot's API token
 CHAT_ID = '6757461113'                 # Update with your chat ID
 
@@ -101,13 +101,16 @@ class LogMonitor(pyinotify.ProcessEvent):
         for keyword, emoji in self.keywords.items():
             # Escape the keyword for use in regex
             escaped_keyword = re.escape(keyword)
-            # Create a regex pattern for case-insensitive matching
-            pattern = re.compile(escaped_keyword, re.IGNORECASE)
-            # Replacement string with emoji and bold formatting
-            replacement = f"{emoji} <b>{keyword}</b>"
+            # Create a regex pattern for case-insensitive matching and capture the matched text
+            pattern = re.compile(f'({escaped_keyword})', re.IGNORECASE)
+            # Replacement function to preserve the original case of the matched keyword
+            def repl(match):
+                matched_text = match.group(1)
+                return f"{emoji} <b>{matched_text}</b>"
             # Perform the replacement
-            escaped_text = pattern.sub(replacement, escaped_text)
+            escaped_text = pattern.sub(repl, escaped_text)
         return escaped_text
+
 
         
     def _read_new_lines(self):
