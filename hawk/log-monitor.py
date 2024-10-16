@@ -90,22 +90,25 @@ class LogMonitor(pyinotify.ProcessEvent):
     #                 self.last_lines.clear()
     #     self.position = self.file.tell()
         
-    def _highlight_keywords(self, text, matched_keyword):
+    def _highlight_keywords(self, text):
         import re
         import html
 
         # Escape the text for HTML
         escaped_text = html.escape(text)
 
-        # Get the emoji for the matched keyword
-        emoji = self.keywords.get(matched_keyword, '')
-
-        # Replace the keyword with bold formatting and emoji
-        # Ensure case-insensitive replacement
-        pattern = re.compile(re.escape(matched_keyword), re.IGNORECASE)
-        replacement = f"{emoji} <b>{matched_keyword}</b>"
-        escaped_text = pattern.sub(replacement, escaped_text)
+        # For each keyword, replace it with the highlighted version
+        for keyword, emoji in self.keywords.items():
+            # Escape the keyword for use in regex
+            escaped_keyword = re.escape(keyword)
+            # Create a regex pattern for case-insensitive matching
+            pattern = re.compile(escaped_keyword, re.IGNORECASE)
+            # Replacement string with emoji and bold formatting
+            replacement = f"{emoji} <b>{keyword}</b>"
+            # Perform the replacement
+            escaped_text = pattern.sub(replacement, escaped_text)
         return escaped_text
+
         
     def _read_new_lines(self):
         self.file.seek(self.position)
