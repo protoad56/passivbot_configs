@@ -30,23 +30,24 @@ class LogMonitor(pyinotify.ProcessEvent):
         payload = {
             'chat_id': CHAT_ID,
             'text': message,
-            'parse_mode': 'MarkdownV2'
+            'parse_mode': 'HTML'
         }
         try:
             response = requests.post(url, data=payload)
             response.raise_for_status()
         except requests.exceptions.HTTPError as e:
-            print(f"Telegram send failed: {e}\nMessage: {message}")
+            error_message = response.json().get('description', 'No description')
+            print(f"Telegram send failed: {e}\nError: {error_message}\nMessage: {message}")
         except requests.exceptions.RequestException as e:
             print(f"Telegram send failed: {e}")
-        
+
     def process_IN_MODIFY(self, event):
         self._read_new_lines()
         
     def process_IN_MOVE_SELF(self, event):
         # Log file has been rotated
         self.file.close()
-        time.sleep(1)  # Wait a moment for the new file to be created
+        time.sleep(2)  # Wait a moment for the new file to be created
         self._open_log_file()
         self._read_new_lines()
         
@@ -68,19 +69,16 @@ class LogMonitor(pyinotify.ProcessEvent):
         self.position = self.file.tell()
 
     def _highlight_keywords(self, text):
-        # Use MarkdownV2 formatting; escape special characters
-        def escape_markdown(text):
-            # Escape Markdown special characters
-            escape_chars = r'\_*[]()~`>#+-=|{}.!'
-            return re.sub(r'([%s])' % re.escape(escape_chars), r'\\\1', text)
+        # Escape the text for HTML
+        escaped_text = html.escape(text)
 
-        escaped_text = escape_markdown(text)
+        # Replace keywords with bold tags
         for keyword in self.keywords:
-            # Escape the keyword as well
-            escaped_keyword = escape_markdown(keyword)
-            # Use regex to replace the keyword with its bold version
+            # Escape keyword for HTML
+            escaped_keyword = html.escape(keyword)
+            # Use regex to replace the keyword with bold tags, case-insensitive
             pattern = re.compile(re.escape(escaped_keyword), re.IGNORECASE)
-            escaped_text = pattern.sub(r'*{}\*'.format(escaped_keyword), escaped_text)
+            escaped_text = pattern.sub(r'<b>{}</b>'.format(escaped_keyword), escaped_text)
         return escaped_text
 
     def fetch_and_process_updates(self):
