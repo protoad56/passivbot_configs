@@ -20,7 +20,7 @@ KEYWORDS = {
     'hedge':'😤'
 }
 
-IGNORE_KEYWORDS = ['dca_plugin']  # Keywords to ignore
+IGNORE_KEYWORDS = []  # Keywords to ignore
 TELEGRAM_TOKEN = '7686131500:AAEWuaYOLynEoSyNEJkiOXI5EpNkHDg5dl4'        # Update with your bot's API token
 CHAT_ID = '6757461113'                 # Update with your chat ID
 SERVER_NAME = socket.gethostname()
