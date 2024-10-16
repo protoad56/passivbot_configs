@@ -7,6 +7,8 @@ import os
 import re
 import threading
 import html
+import socket
+
 
 # Configuration
 LOG_FILE = '/root/hawkbot/logs/hawkbot.log'   # Update with your hawkbot.log path
@@ -21,6 +23,7 @@ KEYWORDS = {
 IGNORE_KEYWORDS = ['dca_plugin']  # Keywords to ignore
 TELEGRAM_TOKEN = '7686131500:AAEWuaYOLynEoSyNEJkiOXI5EpNkHDg5dl4'        # Update with your bot's API token
 CHAT_ID = '6757461113'                 # Update with your chat ID
+SERVER_NAME = socket.gethostname()
 
 class LogMonitor(pyinotify.ProcessEvent):
     def __init__(self, logfile, keywords, ignore_keywords):
@@ -35,21 +38,30 @@ class LogMonitor(pyinotify.ProcessEvent):
         self.file.seek(0, os.SEEK_END)
         self.position = self.file.tell()
             
-    def send_telegram_message(self, message):
-        url = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage'
-        payload = {
-            'chat_id': CHAT_ID,
-            'text': message,
-            'parse_mode': 'HTML'
-        }
-        try:
-            response = requests.post(url, data=payload)
-            response.raise_for_status()
-        except requests.exceptions.HTTPError as e:
-            error_message = response.json().get('description', 'No description')
-            print(f"Telegram send failed: {e}\nError: {error_message}\nMessage: {message}")
-        except requests.exceptions.RequestException as e:
-            print(f"Telegram send failed: {e}")
+def send_telegram_message(self, message):
+    # Escape the server name
+    escaped_server_name = html.escape(SERVER_NAME)
+    # Include server name at the top
+    full_message = f"<b>Server:</b> {escaped_server_name}\n\n{message}"
+    # Print the message for debugging
+    print(f"Sending message: {full_message}")
+    url = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage'
+    payload = {
+        'chat_id': CHAT_ID,
+        'text': full_message,
+        'parse_mode': 'HTML'
+    }
+    try:
+        response = requests.post(url, data=payload)
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        error_message = response.json().get('description', 'No description')
+        print(f"Telegram send failed: {e}\nError: {error_message}\nMessage: {full_message}")
+    except requests.exceptions.RequestException as e:
+        print(f"Telegram send failed: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
             
     def process_IN_MODIFY(self, event):
         self._read_new_lines()
