@@ -6,6 +6,7 @@ import pyinotify
 import os
 import re
 import threading
+import html
 
 # Configuration
 LOG_FILE = '/root/hawkbot/logs/hawkbot.log'   # Update with your hawkbot.log path
