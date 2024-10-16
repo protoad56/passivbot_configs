@@ -35,6 +35,8 @@ class LogMonitor(pyinotify.ProcessEvent):
         try:
             response = requests.post(url, data=payload)
             response.raise_for_status()
+        except requests.exceptions.HTTPError as e:
+            print(f"Telegram send failed: {e}\nMessage: {message}")
         except requests.exceptions.RequestException as e:
             print(f"Telegram send failed: {e}")
         
