@@ -14,7 +14,6 @@ LOG_FILE = '/root/hawkbot/logs/hawkbot.log'   # Update with your hawkbot.log pat
 KEYWORDS = {
     'ERROR': '🔴',    # Red circle for ERROR
     'WARNING': '🟡',  # Yellow circle for WARNING
-    'INFO': '🔵',      # Blue circle for INFO
     'reduce':'🥹',
     'hedge':'😤'
 }
