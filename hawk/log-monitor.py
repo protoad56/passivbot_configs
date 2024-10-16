@@ -108,29 +108,29 @@ class LogMonitor(pyinotify.ProcessEvent):
         escaped_text = pattern.sub(replacement, escaped_text)
         return escaped_text
         
-def _read_new_lines(self):
-    self.file.seek(self.position)
-    while True:
-        line = self.file.readline()
-        if not line:
-            break
-        line = line.rstrip()
-        self.last_lines.append(line)
-        # Check if the line contains any of the alert keywords
-        if any(keyword.lower() in line.lower() for keyword in self.keywords):
-            # Check if the line contains any of the ignore keywords
-            if any(ignore_keyword.lower() in line.lower() for ignore_keyword in self.ignore_keywords):
-                # Skip this line and continue
-                continue
-            else:
-                # Line contains alert keyword and does not contain ignore keyword
-                lines_to_send = list(self.last_lines)
-                # Highlight keywords in the lines
-                lines_to_send = [self._highlight_keywords(l) for l in lines_to_send]
-                message = '\n'.join(lines_to_send)
-                self.send_telegram_message(message)
-                self.last_lines.clear()
-    self.position = self.file.tell()
+    def _read_new_lines(self):
+        self.file.seek(self.position)
+        while True:
+            line = self.file.readline()
+            if not line:
+                break
+            line = line.rstrip()
+            self.last_lines.append(line)
+            # Check if the line contains any of the alert keywords
+            if any(keyword.lower() in line.lower() for keyword in self.keywords):
+                # Check if the line contains any of the ignore keywords
+                if any(ignore_keyword.lower() in line.lower() for ignore_keyword in self.ignore_keywords):
+                    # Skip this line and continue
+                    continue
+                else:
+                    # Line contains alert keyword and does not contain ignore keyword
+                    lines_to_send = list(self.last_lines)
+                    # Highlight keywords in the lines
+                    lines_to_send = [self._highlight_keywords(l) for l in lines_to_send]
+                    message = '\n'.join(lines_to_send)
+                    self.send_telegram_message(message)
+                    self.last_lines.clear()
+        self.position = self.file.tell()
 
 
     def _highlight_keywords(self, text):
@@ -171,21 +171,63 @@ def _read_new_lines(self):
                 if text.startswith('/add_keyword'):
                     keyword = text[len('/add_keyword'):].strip()
                     if keyword and keyword not in self.keywords:
-                        self.keywords.append(keyword)
-                        self.send_telegram_message(f"Keyword '{keyword}' added.")
+                        # Assign a default emoji or prompt for one
+                        self.keywords[keyword] = '🔹'  # Default emoji
+                        self.send_telegram_message(f"Keyword '{keyword}' added with default emoji.")
                 elif text.startswith('/remove_keyword'):
                     keyword = text[len('/remove_keyword'):].strip()
                     if keyword in self.keywords:
-                        self.keywords.remove(keyword)
+                        del self.keywords[keyword]
                         self.send_telegram_message(f"Keyword '{keyword}' removed.")
                 elif text.startswith('/list_keywords'):
-                    keywords = ', '.join(self.keywords)
+                    keywords = ', '.join([f"{emoji} {kw}" for kw, emoji in self.keywords.items()])
                     self.send_telegram_message(f"Current keywords: {keywords}")
+                elif text.startswith('/add_ignore'):
+                    keyword = text[len('/add_ignore'):].strip()
+                    if keyword and keyword not in self.ignore_keywords:
+                        self.ignore_keywords.append(keyword)
+                        self.send_telegram_message(f"Ignore keyword '{keyword}' added.")
+                elif text.startswith('/remove_ignore'):
+                    keyword = text[len('/remove_ignore'):].strip()
+                    if keyword in self.ignore_keywords:
+                        self.ignore_keywords.remove(keyword)
+                        self.send_telegram_message(f"Ignore keyword '{keyword}' removed.")
+                elif text.startswith('/list_ignores'):
+                    keywords = ', '.join(self.ignore_keywords)
+                    self.send_telegram_message(f"Current ignore keywords: {keywords}")
                 else:
-                    self.send_telegram_message("Available commands:\n"
-                                               "/add_keyword [keyword]\n"
-                                               "/remove_keyword [keyword]\n"
-                                               "/list_keywords")
+                    self.send_telegram_message(
+                        "Available commands:\n"
+                        "/add_keyword [keyword]\n"
+                        "/remove_keyword [keyword]\n"
+                        "/list_keywords\n"
+                        "/add_ignore [keyword]\n"
+                        "/remove_ignore [keyword]\n"
+                        "/list_ignores"
+                    )
+
+
+def fetch_and_process_updates(self):
+    import requests
+    offset = None
+    while True:
+        url = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates'
+        params = {'timeout': 100, 'offset': offset}
+        try:
+            response = requests.get(url, params=params)
+            response.raise_for_status()
+            result = response.json()
+            if result['ok']:
+                for update in result['result']:
+                    offset = update['update_id'] + 1
+                    if 'message' in update:
+                        self.process_message(update['message'])
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching updates: {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+        time.sleep(1)
+
 def monitor_log_file():
     wm = pyinotify.WatchManager()
     mask = pyinotify.IN_MODIFY | pyinotify.IN_MOVE_SELF
