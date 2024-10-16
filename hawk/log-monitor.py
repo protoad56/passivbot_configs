@@ -200,45 +200,45 @@ class LogMonitor(pyinotify.ProcessEvent):
                     )
 
 
-    def fetch_and_process_updates(self):
-        import requests
-        offset = None
-        while True:
-            url = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates'
-            params = {'timeout': 100, 'offset': offset}
-            try:
-                response = requests.get(url, params=params)
-                response.raise_for_status()
-                result = response.json()
-                if result['ok']:
-                    for update in result['result']:
-                        offset = update['update_id'] + 1
-                        if 'message' in update:
-                            self.process_message(update['message'])
-            except requests.exceptions.RequestException as e:
-                print(f"Error fetching updates: {e}")
-            except Exception as e:
-                print(f"An unexpected error occurred: {e}")
-            time.sleep(1)
-
-    def monitor_log_file():
-        wm = pyinotify.WatchManager()
-        mask = pyinotify.IN_MODIFY | pyinotify.IN_MOVE_SELF
-
-        log_monitor = LogMonitor(LOG_FILE, KEYWORDS, IGNORE_KEYWORDS)
-        notifier = pyinotify.Notifier(wm, log_monitor)
-        wm.add_watch(LOG_FILE, mask)
-
-        # Start the message handling in a separate thread
-        message_thread = threading.Thread(target=log_monitor.fetch_and_process_updates)
-        message_thread.daemon = True
-        message_thread.start()
-
+def fetch_and_process_updates(self):
+    import requests
+    offset = None
+    while True:
+        url = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates'
+        params = {'timeout': 100, 'offset': offset}
         try:
-            notifier.loop()
-        except KeyboardInterrupt:
-            notifier.stop()
-            log_monitor.file.close()
+            response = requests.get(url, params=params)
+            response.raise_for_status()
+            result = response.json()
+            if result['ok']:
+                for update in result['result']:
+                    offset = update['update_id'] + 1
+                    if 'message' in update:
+                        self.process_message(update['message'])
+        except requests.exceptions.RequestException as e:
+            print(f"Error fetching updates: {e}")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+        time.sleep(1)
+
+def monitor_log_file():
+    wm = pyinotify.WatchManager()
+    mask = pyinotify.IN_MODIFY | pyinotify.IN_MOVE_SELF
+
+    log_monitor = LogMonitor(LOG_FILE, KEYWORDS, IGNORE_KEYWORDS)
+    notifier = pyinotify.Notifier(wm, log_monitor)
+    wm.add_watch(LOG_FILE, mask)
+
+    # Start the message handling in a separate thread
+    message_thread = threading.Thread(target=log_monitor.fetch_and_process_updates)
+    message_thread.daemon = True
+    message_thread.start()
+
+    try:
+        notifier.loop()
+    except KeyboardInterrupt:
+        notifier.stop()
+        log_monitor.file.close()
 
 
 if __name__ == "__main__":
