@@ -61,34 +61,34 @@ class LogMonitor(pyinotify.ProcessEvent):
         self._open_log_file()
         self._read_new_lines()
             
-    def _read_new_lines(self):
-        self.file.seek(self.position)
-        while True:
-            line = self.file.readline()
-            if not line:
-                break
-            line = line.rstrip()
-            self.last_lines.append(line)
-            # Check if the line contains any of the alert keywords
-            matched_keyword = None
-            for keyword in self.keywords:
-                if keyword.lower() in line.lower():
-                    matched_keyword = keyword
-                    break
-            if matched_keyword:
-                # Check if the line contains any of the ignore keywords
-                if any(ignore_keyword.lower() in line.lower() for ignore_keyword in self.ignore_keywords):
-                    # Skip this line and continue
-                    continue
-                else:
-                    # Line contains alert keyword and does not contain ignore keyword
-                    lines_to_send = list(self.last_lines)
-                    # Highlight keywords in the lines
-                    lines_to_send = [self._highlight_keywords(l, matched_keyword) for l in lines_to_send]
-                    message = '\n'.join(lines_to_send)
-                    self.send_telegram_message(message)
-                    self.last_lines.clear()
-        self.position = self.file.tell()
+    # def _read_new_lines(self):
+    #     self.file.seek(self.position)
+    #     while True:
+    #         line = self.file.readline()
+    #         if not line:
+    #             break
+    #         line = line.rstrip()
+    #         self.last_lines.append(line)
+    #         # Check if the line contains any of the alert keywords
+    #         matched_keyword = None
+    #         for keyword in self.keywords:
+    #             if keyword.lower() in line.lower():
+    #                 matched_keyword = keyword
+    #                 break
+    #         if matched_keyword:
+    #             # Check if the line contains any of the ignore keywords
+    #             if any(ignore_keyword.lower() in line.lower() for ignore_keyword in self.ignore_keywords):
+    #                 # Skip this line and continue
+    #                 continue
+    #             else:
+    #                 # Line contains alert keyword and does not contain ignore keyword
+    #                 lines_to_send = list(self.last_lines)
+    #                 # Highlight keywords in the lines
+    #                 lines_to_send = [self._highlight_keywords(l, matched_keyword) for l in lines_to_send]
+    #                 message = '\n'.join(lines_to_send)
+    #                 self.send_telegram_message(message)
+    #                 self.last_lines.clear()
+    #     self.position = self.file.tell()
         
     def _highlight_keywords(self, text, matched_keyword):
         import re
@@ -131,19 +131,6 @@ class LogMonitor(pyinotify.ProcessEvent):
                     self.last_lines.clear()
         self.position = self.file.tell()
 
-
-    def _highlight_keywords(self, text):
-        # Escape the text for HTML
-        escaped_text = html.escape(text)
-
-        # Replace keywords with bold tags
-        for keyword in self.keywords:
-            # Escape keyword for HTML
-            escaped_keyword = html.escape(keyword)
-            # Use regex to replace the keyword with bold tags, case-insensitive
-            pattern = re.compile(re.escape(escaped_keyword), re.IGNORECASE)
-            escaped_text = pattern.sub(r'<b>{}</b>'.format(escaped_keyword), escaped_text)
-        return escaped_text
 
     def fetch_and_process_updates(self):
         offset = None
