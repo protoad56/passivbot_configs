@@ -10,9 +10,9 @@ import html
 import socket
 
 
-# Configuration
+
 LOG_FILE = '/root/hawkbot/logs/hawkbot.log'   # Update with your hawkbot.log path
-# Map keywords to their corresponding emojis
+# Keywords to monitor
 KEYWORDS = {
     'ERROR': '🔴',    # Red circle for ERROR
     'WARNING': '🟡',  # Yellow circle for WARNING
@@ -22,14 +22,15 @@ KEYWORDS = {
 }
 
 IGNORE_KEYWORDS = ['dca_plugin']  # Keywords to ignore
-TELEGRAM_TOKEN = '7686131500:AAEWuaYOLynEoSyNEJkiOXI5EpNkHDg5dl4'        # Update with your bot's API token
-CHAT_ID = '6757461113'                 # Update with your chat ID
+
+TELEGRAM_TOKEN = ''        # Update with your bot's API token
+CHAT_ID = ''                 # Update with your chat ID
 SERVER_NAME = socket.gethostname()
 
 class LogMonitor(pyinotify.ProcessEvent):
     def __init__(self, logfile, keywords, ignore_keywords):
         self.logfile = logfile
-        self.keywords = keywords  # Now a dictionary
+        self.keywords = keywords  
         self.ignore_keywords = ignore_keywords
         self.last_lines = deque(maxlen=5)
         self._open_log_file()
@@ -40,11 +41,8 @@ class LogMonitor(pyinotify.ProcessEvent):
         self.position = self.file.tell()
                 
     def send_telegram_message(self, message):
-        # Escape the server name
         escaped_server_name = html.escape(SERVER_NAME)
-        # Include server name at the top
         full_message = f"<b>Server:</b> {escaped_server_name}\n\n{message}"
-        # Print the message for debugging
         print(f"Sending message: {full_message}")
         url = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage'
         payload = {
@@ -67,27 +65,20 @@ class LogMonitor(pyinotify.ProcessEvent):
         self._read_new_lines()
                 
     def process_IN_MOVE_SELF(self, event):
-        # Log file has been rotated
         self.file.close()
-        time.sleep(1)  # Wait a moment for the new file to be created
+        time.sleep(1)  
         self._open_log_file()
         self._read_new_lines()
   
     def _highlight_keywords(self, text):
-        # Escape the text for HTML
         escaped_text = html.escape(text)
 
-        # For each keyword, replace it with the highlighted version
         for keyword, emoji in self.keywords.items():
-            # Escape the keyword for use in regex
             escaped_keyword = re.escape(keyword)
-            # Create a regex pattern for case-insensitive matching and capture the matched text
             pattern = re.compile(f'({escaped_keyword})', re.IGNORECASE)
-            # Replacement function to preserve the original case of the matched keyword
             def repl(match):
                 matched_text = match.group(1)
                 return f"{emoji} <b>{matched_text}</b>"
-            # Perform the replacement
             escaped_text = pattern.sub(repl, escaped_text)
         return escaped_text
 
@@ -99,16 +90,12 @@ class LogMonitor(pyinotify.ProcessEvent):
                 break
             line = line.rstrip()
             self.last_lines.append(line)
-            # Check if the line contains any of the alert keywords
+
             if any(keyword.lower() in line.lower() for keyword in self.keywords):
-                # Check if the line contains any of the ignore keywords
                 if any(ignore_keyword.lower() in line.lower() for ignore_keyword in self.ignore_keywords):
-                    # Skip this line and continue
                     continue
                 else:
-                    # Line contains alert keyword and does not contain ignore keyword
                     lines_to_send = list(self.last_lines)
-                    # Highlight keywords in the lines
                     lines_to_send = [self._highlight_keywords(l) for l in lines_to_send]
                     message = '\n'.join(lines_to_send)
                     self.send_telegram_message(message)
@@ -201,7 +188,6 @@ def monitor_log_file():
     notifier = pyinotify.Notifier(wm, log_monitor)
     wm.add_watch(LOG_FILE, mask)
 
-    # Start the message handling in a separate thread
     message_thread = threading.Thread(target=log_monitor.fetch_and_process_updates)
     message_thread.daemon = True
     message_thread.start()
