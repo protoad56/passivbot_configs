@@ -16,12 +16,11 @@ LOG_FILE = '/root/hawkbot/logs/hawkbot.log'   # Update with your hawkbot.log pat
 KEYWORDS = {
     'ERROR': '🔴',    # Red circle for ERROR
     'WARNING': '🟡',  # Yellow circle for WARNING
-    'reduce':'🥹',
-    'hedge':'😤',
-    'profit':'🤑'
+    'multi_autoreduce_plugin':'🥹',
+    'hedge_plugin':'😤'
 }
 
-IGNORE_KEYWORDS = ['dca_plugin']  # Keywords to ignore
+IGNORE_KEYWORDS = ['dca_plugin','Order is rejected']  # Keywords to ignore
 TELEGRAM_TOKEN = '7686131500:AAEWuaYOLynEoSyNEJkiOXI5EpNkHDg5dl4'        # Update with your bot's API token
 CHAT_ID = '6757461113'                 # Update with your chat ID
 SERVER_NAME = socket.gethostname()
