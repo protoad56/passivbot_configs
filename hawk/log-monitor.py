@@ -32,12 +32,12 @@ class LogMonitor(pyinotify.ProcessEvent):
         self.ignore_keywords = ignore_keywords
         self.last_lines = deque(maxlen=5)
         self._open_log_file()
-            
+                
     def _open_log_file(self):
         self.file = open(self.logfile, 'r')
         self.file.seek(0, os.SEEK_END)
         self.position = self.file.tell()
-            
+                
     def send_telegram_message(self, message):
         # Escape the server name
         escaped_server_name = html.escape(SERVER_NAME)
@@ -62,21 +62,17 @@ class LogMonitor(pyinotify.ProcessEvent):
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
 
+    def process_IN_MODIFY(self, event):
+        self._read_new_lines()
                 
-        def process_IN_MODIFY(self, event):
-            self._read_new_lines()
-                
-        def process_IN_MOVE_SELF(self, event):
-            # Log file has been rotated
-            self.file.close()
-            time.sleep(1)  # Wait a moment for the new file to be created
-            self._open_log_file()
-            self._read_new_lines()
-      
+    def process_IN_MOVE_SELF(self, event):
+        # Log file has been rotated
+        self.file.close()
+        time.sleep(1)  # Wait a moment for the new file to be created
+        self._open_log_file()
+        self._read_new_lines()
+  
     def _highlight_keywords(self, text):
-        import re
-        import html
-
         # Escape the text for HTML
         escaped_text = html.escape(text)
 
@@ -94,8 +90,6 @@ class LogMonitor(pyinotify.ProcessEvent):
             escaped_text = pattern.sub(repl, escaped_text)
         return escaped_text
 
-
-        
     def _read_new_lines(self):
         self.file.seek(self.position)
         while True:
@@ -119,7 +113,6 @@ class LogMonitor(pyinotify.ProcessEvent):
                     self.send_telegram_message(message)
                     self.last_lines.clear()
         self.position = self.file.tell()
-
 
     def fetch_and_process_updates(self):
         offset = None
@@ -199,28 +192,6 @@ class LogMonitor(pyinotify.ProcessEvent):
                         "/list_ignores"
                     )
 
-
-def fetch_and_process_updates(self):
-    import requests
-    offset = None
-    while True:
-        url = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/getUpdates'
-        params = {'timeout': 100, 'offset': offset}
-        try:
-            response = requests.get(url, params=params)
-            response.raise_for_status()
-            result = response.json()
-            if result['ok']:
-                for update in result['result']:
-                    offset = update['update_id'] + 1
-                    if 'message' in update:
-                        self.process_message(update['message'])
-        except requests.exceptions.RequestException as e:
-            print(f"Error fetching updates: {e}")
-        except Exception as e:
-            print(f"An unexpected error occurred: {e}")
-        time.sleep(1)
-
 def monitor_log_file():
     wm = pyinotify.WatchManager()
     mask = pyinotify.IN_MODIFY | pyinotify.IN_MOVE_SELF
@@ -239,7 +210,6 @@ def monitor_log_file():
     except KeyboardInterrupt:
         notifier.stop()
         log_monitor.file.close()
-
 
 if __name__ == "__main__":
     monitor_log_file()
