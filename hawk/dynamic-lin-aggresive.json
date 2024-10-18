@@ -22,7 +22,7 @@
         // }
     },
     "dynamic_entry": {
-        "max_positions": 8,
+        "max_positions": 6,
         "enabled": true,
         "dynamic_entry_sweep_frequency": "5m",
         "filters": [
@@ -239,7 +239,7 @@
                         "trailing_shift_threshold": 0.002
                     },
                     "hedge": {
-                        "activate_hedge_above_wallet_exposure_pct": 25,
+                        "activate_hedge_above_wallet_exposure_pct": 20,
                         "dca_config": {
                         "period": "3M",
                         "period_timeframe": "1m",
@@ -304,7 +304,7 @@
                         "trailing_shift_threshold": 0.002
                     },
                     "hedge": {
-                        "activate_hedge_above_wallet_exposure_pct": 25,
+                        "activate_hedge_above_wallet_exposure_pct": 20,
                         "dca_config": {
                         "period": "3M",
                         "period_timeframe": "1m",
