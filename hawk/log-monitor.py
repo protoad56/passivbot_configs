@@ -32,11 +32,16 @@ class LogMonitor(pyinotify.ProcessEvent):
         self.ignore_keywords = ignore_keywords
         self.last_lines = deque(maxlen=5)
         self._open_log_file()
-                
     def _open_log_file(self):
-        self.file = open(self.logfile, 'r')
-        self.file.seek(0, os.SEEK_END)
-        self.position = self.file.tell()
+        try:
+            self.file = open(self.logfile, 'r')
+            self.file.seek(0, os.SEEK_END)
+            self.position = self.file.tell()
+        except FileNotFoundError:
+            # The log file doesn't exist yet
+            self.file = None
+            self.position = 0
+
                 
     def send_telegram_message(self, message):
         # Escape the server name
@@ -62,16 +67,31 @@ class LogMonitor(pyinotify.ProcessEvent):
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
 
+    def process_IN_CREATE(self, event):
+        if event.name == os.path.basename(LOG_FILE):
+            # The log file has been (re)created; reopen it
+            self._open_log_file()
+
     def process_IN_MODIFY(self, event):
-        self._read_new_lines()
+        if event.name == os.path.basename(LOG_FILE):
+            self._read_new_lines()
+
                 
     def process_IN_MOVE_SELF(self, event):
-        # Log file has been rotated
-        self.file.close()
-        time.sleep(1)  # Wait a moment for the new file to be created
-        self._open_log_file()
-        self._read_new_lines()
-  
+        if event.name == os.path.basename(LOG_FILE):
+            # Log file has been moved or rotated
+            self.file.close()
+            time.sleep(1)  # Wait a moment for the new file to be created
+            self._open_log_file()
+            self._read_new_lines()
+
+    def process_IN_DELETE_SELF(self, event):
+        if event.name == os.path.basename(LOG_FILE):
+            # The log file has been deleted
+            self.file.close()
+            self.file = None
+            self.position = 0
+
     def _highlight_keywords(self, text):
         # Escape the text for HTML
         escaped_text = html.escape(text)
@@ -91,6 +111,8 @@ class LogMonitor(pyinotify.ProcessEvent):
         return escaped_text
 
     def _read_new_lines(self):
+        if self.file is None:
+            return
         self.file.seek(self.position)
         while True:
             line = self.file.readline()
@@ -113,6 +135,7 @@ class LogMonitor(pyinotify.ProcessEvent):
                     self.send_telegram_message(message)
                     self.last_lines.clear()
         self.position = self.file.tell()
+
 
     def fetch_and_process_updates(self):
         offset = None
@@ -194,11 +217,13 @@ class LogMonitor(pyinotify.ProcessEvent):
 
 def monitor_log_file():
     wm = pyinotify.WatchManager()
-    mask = pyinotify.IN_MODIFY | pyinotify.IN_MOVE_SELF
+    mask = pyinotify.IN_MODIFY | pyinotify.IN_MOVE_SELF | pyinotify.IN_CREATE | pyinotify.IN_DELETE_SELF
 
     log_monitor = LogMonitor(LOG_FILE, KEYWORDS, IGNORE_KEYWORDS)
     notifier = pyinotify.Notifier(wm, log_monitor)
-    wm.add_watch(LOG_FILE, mask)
+    
+    # Watch the directory instead of the log file
+    wm.add_watch('/root/hawkbot/logs/', mask)
 
     # Start the message handling in a separate thread
     message_thread = threading.Thread(target=log_monitor.fetch_and_process_updates)
@@ -210,6 +235,7 @@ def monitor_log_file():
     except KeyboardInterrupt:
         notifier.stop()
         log_monitor.file.close()
+
 
 if __name__ == "__main__":
     monitor_log_file()
