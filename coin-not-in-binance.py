@@ -159,6 +159,7 @@ def main():
         send_telegram_message(message)
     else:
         print("No changes in the top 50 assets. No message sent.")
+        send_telegram_message("No changes in the top 50 assets.")
 
 if __name__ == "__main__":
     main()
