@@ -190,9 +190,6 @@
                 }
             },
             {
-                "filter": "ATRFilter"
-            },
-            {
                 "filter": "Last24hVolumeFilter",
                 "config": {
                     "sort": "desc",
@@ -204,9 +201,12 @@
                 "config": {
                     "sort": "desc",
                     "sort_absolute": true,
-                    "top": 15
+                    "top": 30
                 }
             },
+            {
+                "filter": "ATRFilter"
+            }
             // {
             //     "filter": "RandomizerFilter"
             // }
