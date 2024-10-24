@@ -1,0 +1,254 @@
+{
+  // supported exchanges: [kucoin, okx, bybit, binance, bitget]
+  user: binance_multi
+  twe_long: 2.5
+  twe_short: 1
+  n_longs: 4
+  n_shorts: 0
+  max_min_cost: 5.0
+  n_ohlcvs: 100
+  ohlcv_interval: 1h
+  leverage: 10
+  price_distance_threshold: 0.3
+
+  passivbot_root_dir: "~/passivbot"
+  // add venv if needed, e.g. "source bin/activate"
+  before_command: "source myenv/bin/activate"
+
+  // set to zero to disable
+  volume_clip_threshold: 0.61  // include 51% of the highest volume coins
+  unilateralness_clip_threshold: 0.7 // include 49% of symbols with lowest unilateralness
+  noisiness_clip_threshold: 0.52 // include 52% of symbols with highest noisiness
+
+  // don't allow symbols younger than threshold. Format YYYY-MM. Set to 0 to allow all symbols.
+  market_age_threshold: 2023-09
+
+  max_n_panes: 8
+
+  // start bots with x seconds delay
+  sleep_interval: 5
+
+  // forager restarts bots every x minutes
+  update_interval_minutes: 30
+
+  // Don't create bots with these symbols
+  symbols_to_ignore: [
+    SYM1USDT
+    SYM2USDT
+  ]
+
+  // if approved_symbols_long is empty, all symbols are approved for longs
+  approved_symbols_long: [
+    ADAUSDT
+    ALGOUSDT
+    ATOMUSDT
+    AVAXUSDT
+    BNBUSDT
+    BTCUSDT
+    CHZUSDT
+    COMPUSDT
+    COTIUSDT
+    DOTUSDT
+    DYDXUSDT
+    EOSUSDT
+    ETCUSDT
+    ETHUSDT
+    FETUSDT
+    FTMUSDT
+    GALAUSDT
+    GALUSDT
+    GMTUSDT
+    HBARUSDT
+    HOTUSDT
+    IMXUSDT
+    INJUSDT
+    KAVAUSDT
+    LINKUSDT
+    LTCUSDT
+    MAGICUSDT
+    MANAUSDT
+    MATICUSDT
+    NEARUSDT
+    NEOUSDT
+    OCEANUSDT
+    OGNUSDT
+    ONEUSDT
+    ONTUSDT
+    OPUSDT
+    PEOPLEUSDT
+    RDNTUSDT
+    RNDRUSDT
+    ROSEUSDT
+    RUNEUSDT
+    SANDUSDT
+    SNXUSDT
+    SOLUSDT
+    STORJUSDT
+    SUSHIUSDT
+    THETAUSDT
+    TRXUSDT
+    UNFIUSDT
+    VETUSDT
+    WAVESUSDT
+    XLMUSDT
+    XMRUSDT
+    XRPUSDT
+    XTZUSDT
+    BCHUSDT
+    ENJUSDT
+    OMGUSDT
+  ]
+
+  // if approved_symbols_short is empty, all symbols are approved for shorts
+  approved_symbols_short: [
+    AGIXUSDT
+    ALGOUSDT
+    ANKRUSDT
+    APEUSDT
+    APTUSDT
+    ATOMUSDT
+    AUDIOUSDT
+    AVAXUSDT
+    AXSUSDT
+    CHRUSDT
+    CHZUSDT
+    COMPUSDT
+    COTIUSDT
+    CRVUSDT
+    DOGEUSDT
+    DOTUSDT
+    DYDXUSDT
+    EGLDUSDT
+    ENJUSDT
+    ENSUSDT
+    EOSUSDT
+    ETCUSDT
+    GALAUSDT
+    GALUSDT
+    GRTUSDT
+    HBARUSDT
+    HOTUSDT
+    IMXUSDT
+    INJUSDT
+    KAVAUSDT
+    KSMUSDT
+    LINKUSDT
+    MANAUSDT
+    MATICUSDT
+    OCEANUSDT
+    OMGUSDT
+    OPUSDT
+    RENUSDT
+    ROSEUSDT
+    SANDUSDT
+    SKLUSDT
+    SNXUSDT
+    SUSHIUSDT
+    SXPUSDT
+    WAVESUSDT
+    WOOUSDT
+    XRPUSDT
+    XTZUSDT
+    ZRXUSDT
+  ]
+
+  // Specify directory containing live configs.
+  // They are sorted alphabetically, then the first config whose filename includes symbol is selected.
+  // Set to "" to disable
+  live_configs_dir_long: "../passivbot_configs/clock/"
+  live_configs_dir_short: "../passivbot_configs/clock/"
+
+  // overrides live_configs_dir
+  live_configs_map: {
+    1INCHUSDT: ../passivbot_configs/clock/1INCHUSDT.json
+    AAVEUSDT: ../passivbot_configs/clock/AAVEUSDT.json
+    ADAUSDT: ../passivbot_configs/clock/ADAUSDT.json
+    AGIXUSDT: ../passivbot_configs/clock/AGIXUSDT.json
+    ALGOUSDT: ../passivbot_configs/clock/ALGOUSDT.json
+    ALPHAUSDT: ../passivbot_configs/clock/ALPHAUSDT.json
+    ANKRUSDT: ../passivbot_configs/clock/ANKRUSDT.json
+    APEUSDT: ../passivbot_configs/clock/APEUSDT.json
+    APTUSDT: ../passivbot_configs/clock/APTUSDT.json
+    ARUSDT: ../passivbot_configs/clock/ARUSDT.json
+    ATOMUSDT: ../passivbot_configs/clock/ATOMUSDT.json
+    AUDIOUSDT: ../passivbot_configs/clock/AUDIOUSDT.json
+    AVAXUSDT: ../passivbot_configs/clock/AVAXUSDT.json
+    AXSUSDT: ../passivbot_configs/clock/AXSUSDT.json
+    BNBUSDT: ../passivbot_configs/clock/BNBUSDT.json
+    CHRUSDT: ../passivbot_configs/clock/CHRUSDT.json
+    CHZUSDT: ../passivbot_configs/clock/CHZUSDT.json
+    COTIUSDT: ../passivbot_configs/clock/COTIUSDT.json
+    CRVUSDT: ../passivbot_configs/clock/CRVUSDT.json
+    DOGEUSDT: ../passivbot_configs/clock/DOGEUSDT.json
+    DOTUSDT: ../passivbot_configs/clock/DOTUSDT.json
+    DYDXUSDT: ../passivbot_configs/clock/DYDXUSDT.json
+    EGLDUSDT: ../passivbot_configs/clock/EGLDUSDT.json
+    ENJUSDT: ../passivbot_configs/clock/ENJUSDT.json
+    ENSUSDT: ../passivbot_configs/clock/ENSUSDT.json
+    EOSUSDT: ../passivbot_configs/clock/EOSUSDT.json
+    FETUSDT: ../passivbot_configs/clock/FETUSDT.json
+    FTMUSDT: ../passivbot_configs/clock/FTMUSDT.json
+    GALAUSDT: ../passivbot_configs/clock/GALAUSDT.json
+    GALUSDT: ../passivbot_configs/clock/GALUSDT.json
+    GMTUSDT: ../passivbot_configs/clock/GMTUSDT.json
+    GRTUSDT: ../passivbot_configs/clock/GRTUSDT.json
+    HBARUSDT: ../passivbot_configs/clock/HBARUSDT.json
+    HNTUSDT: ../passivbot_configs/clock/HNTUSDT.json
+    INJUSDT: ../passivbot_configs/clock/INJUSDT.json
+    KSMUSDT: ../passivbot_configs/clock/KSMUSDT.json
+    LINKUSDT: ../passivbot_configs/clock/LINKUSDT.json
+    LTCUSDT: ../passivbot_configs/clock/LTCUSDT.json
+    MANAUSDT: ../passivbot_configs/clock/MANAUSDT.json
+    MATICUSDT: ../passivbot_configs/clock/MATICUSDT.json
+    NEARUSDT: ../passivbot_configs/clock/NEARUSDT.json
+    OCEANUSDT: ../passivbot_configs/clock/OCEANUSDT.json
+    OMGUSDT: ../passivbot_configs/clock/OMGUSDT.json
+    ONEUSDT: ../passivbot_configs/clock/ONEUSDT.json
+    OPUSDT: ../passivbot_configs/clock/OPUSDT.json
+    RENUSDT: ../passivbot_configs/clock/RENUSDT.json
+    RNDRUSDT: ../passivbot_configs/clock/RNDRUSDT.json
+    ROSEUSDT: ../passivbot_configs/clock/ROSEUSDT.json
+    RSRUSDT: ../passivbot_configs/clock/RSRUSDT.json
+    RUNEUSDT: ../passivbot_configs/clock/RUNEUSDT.json
+    SANDUSDT: ../passivbot_configs/clock/SANDUSDT.json
+    SKLUSDT: ../passivbot_configs/clock/SKLUSDT.json
+    SNXUSDT: ../passivbot_configs/clock/SNXUSDT.json
+    SUSHIUSDT: ../passivbot_configs/clock/SUSHIUSDT.json
+    SXPUSDT: ../passivbot_configs/clock/SXPUSDT.json
+    THETAUSDT: ../passivbot_configs/clock/THETAUSDT.json
+    TRXUSDT: ../passivbot_configs/clock/TRXUSDT.json
+    UNIUSDT: ../passivbot_configs/clock/UNIUSDT.json
+    VETUSDT: ../passivbot_configs/clock/VETUSDT.json
+    WAVESUSDT: ../passivbot_configs/clock/WAVESUSDT.json
+    WOOUSDT: ../passivbot_configs/clock/WOOUSDT.json
+    XRPUSDT: ../passivbot_configs/clock/XRPUSDT.json
+    XTZUSDT: ../passivbot_configs/clock/XTZUSDT.json
+    ZECUSDT: ../passivbot_configs/clock/ZECUSDT.json
+    ZILUSDT: ../passivbot_configs/clock/ZILUSDT.json
+    ZRXUSDT: ../passivbot_configs/clock/ZRXUSDT.json
+  }
+
+
+  live_configs_map_analysis: "../passivbot_configs/backtest_result_clock.csv"
+
+  // overrides long configs from live_configs_map
+  live_configs_map_long: {
+    BCHUSDT: configs/live/clock_mode.example.json
+  }
+
+  // overrides short configs from live_configs_map
+  live_configs_map_short: {
+    EOSUSDT: configs/live/single_symbol_optimizations/clock/EOSUSDT.json
+  }
+
+  // if symbol is missing from live_configs_map, default to this config
+  default_config_path: configs/live/clock_mode.example.json
+
+  // if symbol is approved:
+  // if symbol is present in live_configs_map_{long/short}, use that config for {long/short}
+  // elif symbol is present in live_configs_map, use that config for {long/short}
+  // elif there is a filename in live_configs_dir_{long/short} containing symbol, use that config for {long/short}
+  // else use default_config_path for {long/short}
+
+}
+
