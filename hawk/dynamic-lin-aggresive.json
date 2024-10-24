@@ -11,7 +11,7 @@
         "MultiAutoreducePlugin": {
             "reduce_interval": "6H",
             "profit_percentage_used_for_reduction": 0.05,
-            "activate_above_upnl_pct": 35,
+            "activate_above_upnl_pct": 30,
             "max_age_income": "1D"
         },
         // "ProfitTransferPlugin": {
