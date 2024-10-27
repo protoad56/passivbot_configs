@@ -199,6 +199,7 @@
             {
                 "filter": "LevelFilter",
                 "config": {
+                  "position_side":"long",
                   "period": "12M",
                   "period_timeframe": "15m",
                 //   "below_support_distance": 0.015,
