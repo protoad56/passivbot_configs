@@ -197,14 +197,6 @@
                 }
             },
             {
-                "filter": "Last24hPriceChangePctFilter",
-                "config": {
-                    "sort": "desc",
-                    "sort_absolute": true,
-                    "top": 30
-                }
-            },
-            {
                 "filter": "LevelFilter",
                 "config": {
                   "period": "12M",
@@ -219,6 +211,14 @@
                   "nr_clusters": 6,
                   "overlap": 0.001,
                   "minimum_number_of_available_dcas": 5
+                }
+            },
+            {
+                "filter": "Last24hPriceChangePctFilter",
+                "config": {
+                    "sort": "desc",
+                    "sort_absolute": true,
+                    "top": 30
                 }
             }
             // {
