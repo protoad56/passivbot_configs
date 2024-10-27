@@ -203,7 +203,7 @@
                   "period": "12M",
                   "period_timeframe": "15m",
                   "below_support_distance": 0.015,
-                  "above_support_distance": 0.035,
+                  "above_support_distance": 0.015,
                   "outer_price_period": "24M",
                   "outer_price_timeframe": "4H",
                   "minimum_distance_to_outer_price": 0.2,
