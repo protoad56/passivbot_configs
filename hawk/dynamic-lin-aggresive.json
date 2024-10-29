@@ -271,7 +271,7 @@
                 }
             },
             "short": {
-                "enabled": false,
+                "enabled": true,
                 "strategy": "BigShortStrategy",
                 "tick_execution_interval_ms": 250,
                 "mode": "NORMAL",
