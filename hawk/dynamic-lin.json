@@ -21,71 +21,7 @@
         //     "transfer_type": "USDT_FUTURES_TO_SPOT"
         // }
     },
-    "symbol_configs": [
-        {
-          "symbol": [
-            "OPUSDT"
-          ],
-          "long": {
-            "enabled": true,
-            "strategy": "BigLongStrategy",
-            "tick_execution_interval_ms": 250,
-            "wallet_exposure_ratio": 12,
-            "strategy_config": {
-              "entry_order_type": "LIMIT",
-              "limit_orders_reissue_threshold": 0.00001,
-              "repost_lower_allowed": false,
-              "dca": {
-                "period": "3D",
-                "period_timeframe": "1m",
-                "algo": "LINEAR",
-                "nr_clusters": 5,
-                "outer_price_distance": 0.042,
-                "ratio_power": 1.5,
-                "allow_add_new_smaller_dca": false
-              },
-              "tp": {
-                "minimum_tp": 0.0025
-              },
-              "stoploss": {
-                "enabled": false,
-                "last_entry_trigger_distance": 0.01,
-                "post_stoploss_mode": "MANUAL",
-                "order_type": "STOP"
-              }
-            }
-          },
-          "short": {
-            "enabled": true,
-            "strategy": "BigShortStrategy",
-            "tick_execution_interval_ms": 250,
-            "wallet_exposure_ratio": 12,
-            "strategy_config": {
-              "entry_order_type": "LIMIT",
-              "limit_orders_reissue_threshold": 0.00001,
-              "repost_higher_allowed": false,
-              "dca": {
-                "period": "3D",
-                "period_timeframe": "1m",
-                "algo": "LINEAR",
-                "nr_clusters": 5,
-                "outer_price_distance": 0.042,
-                "ratio_power": 1.5,
-                "allow_add_new_smaller_dca": false
-              },
-              "tp": {
-                "minimum_tp": 0.0025
-              },
-              "stoploss": {
-                "enabled": false,
-                "last_entry_trigger_distance": 0.01,
-                "post_stoploss_mode": "MANUAL",
-                "order_type": "STOP"
-              }
-            }
-          }
-        }
-      ],
+
     "dynamic_entry": {
         "max_positions": 10,
         "enabled": true,
