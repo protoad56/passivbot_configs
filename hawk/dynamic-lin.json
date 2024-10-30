@@ -22,7 +22,7 @@
         // }
     },
     "dynamic_entry": {
-        "max_positions": 14,
+        "max_positions": 10,
         "enabled": true,
         "dynamic_entry_sweep_frequency": "5m",
         "filters": [
@@ -237,7 +237,7 @@
                 "strategy": "BigLongStrategy",
                 "tick_execution_interval_ms": 250,
                 "mode": "NORMAL",
-                "wallet_exposure_ratio": 0.2,
+                "wallet_exposure_ratio": 0.3,
                 "strategy_config": {
                     "entry_order_type": "LIMIT",
                     "cancel_orders_on_position_close": true,
@@ -303,7 +303,7 @@
                 "strategy": "BigShortStrategy",
                 "tick_execution_interval_ms": 250,
                 "mode": "NORMAL",
-                "wallet_exposure_ratio": 0.1,
+                "wallet_exposure_ratio": 0.3,
                 "strategy_config": {
                     "entry_order_type": "LIMIT",
                     "cancel_orders_on_position_close": true,
@@ -317,7 +317,7 @@
                         "outer_price_level_nr": 1,
                         "outer_price_period": "24M",
                         "outer_price_timeframe": "4H",
-                        "outer_price_nr_clusters": 10,
+                        "outer_price_nr_clusters": 6,
                         "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
                         "minimum_distance_to_outer_price": 0.55,
                         "ratio_power": 1.0, //governs the quantity of each subsequent DCA order. Setting this to a higher value will bring the position price closer when a DCA is filled, at the expense of the first orders being smaller
