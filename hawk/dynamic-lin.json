@@ -243,7 +243,7 @@
                     "cancel_orders_on_position_close": true,
                     "limit_orders_reissue_threshold": 0.003,
                     "repost_lower_allowed": true,
-                    "minimum_number_of_available_dcas":5
+                    "minimum_number_of_available_dcas":4,
                     "dca": {
                         "period": "12M",
                         "period_timeframe": "15m",
