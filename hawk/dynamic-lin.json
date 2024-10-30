@@ -24,7 +24,7 @@
     "dynamic_entry": {
         "max_positions": 10,
         "enabled": true,
-        "dynamic_entry_sweep_frequency": "5m",
+        "dynamic_entry_sweep_frequency": "1m",
         "filters": [
             {
                 "filter": "SymbolFilter",
@@ -197,26 +197,8 @@
                 }
             },
             // {
-            //     "filter": "LevelFilter",
-            //     "config": {
-            //       "position_side":"long",
-            //       "period": "12M",
-            //       "period_timeframe": "15m",
-            //       "below_support_distance": 0.015,
-            //       "above_support_distance": 0.015,
-            //       "outer_price_period": "24M",
-            //       "outer_price_timeframe": "4H",
-            //       "minimum_distance_to_outer_price": 0.2,
-            //       "maximum_distance_from_outer_price": 0.5,
-            //       "outer_price_level_nr": 6,
-            //       "nr_clusters": 6,
-            //       "overlap": 0.001,
-            //       "minimum_number_of_available_dcas": 5
-            //     }
+            //     "filter": "ATRFilter"
             // },
-            {
-                "filter": "ATRFilter"
-            },
             {
                 "filter": "Last24hPriceChangePctFilter",
                 "config": {
@@ -225,10 +207,7 @@
                     "top": 30
                 }
             }
-            
-            // {
-            //     "filter": "RandomizerFilter"
-            // }
+
         ],
         "symbol_config_template": {
             "exchange_leverage": 10,
