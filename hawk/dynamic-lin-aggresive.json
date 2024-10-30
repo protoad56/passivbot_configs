@@ -197,10 +197,10 @@
                     "sort_absolute": true,
                     "top": 50
                 }
-            },
-            {
-                "filter": "ATRFilter"
             }
+            // {
+            //     "filter": "ATRFilter"
+            // }
 
         ],
         "symbol_config_template": {
