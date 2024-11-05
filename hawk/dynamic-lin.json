@@ -206,15 +206,15 @@
                     "sort_absolute": true,
                     "top": 30
                 }
-            },
-            {
-                "filter": "EmaReversalFilter",
-                "config": {
-                    "window": 14,
-                    "timeframe": "15m",
-                    "pivot": "TOP"
-                }
             }
+            // {
+            //     "filter": "EmaReversalFilter",
+            //     "config": {
+            //         "window": 14,
+            //         "timeframe": "15m",
+            //         "pivot": "TOP"
+            //     }
+            // }
 
         ],
         "symbol_config_template": {
