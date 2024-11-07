@@ -1,9 +1,9 @@
 {
   // supported exchanges: [kucoin, okx, bybit, binance, bitget]
   user: binance_multi
-  twe_long: 2.5
+  twe_long: 2.7
   twe_short: 1
-  n_longs: 4
+  n_longs: 5
   n_shorts: 0
   max_min_cost: 5.0
   n_ohlcvs: 100
@@ -16,12 +16,12 @@
   before_command: "source myenv/bin/activate"
 
   // set to zero to disable
-  volume_clip_threshold: 0.61  // include 51% of the highest volume coins
-  unilateralness_clip_threshold: 0.7 // include 49% of symbols with lowest unilateralness
+  volume_clip_threshold: 0.81  // include 51% of the highest volume coins
+  unilateralness_clip_threshold: 0.8 // include 49% of symbols with lowest unilateralness
   noisiness_clip_threshold: 0.52 // include 52% of symbols with highest noisiness
 
   // don't allow symbols younger than threshold. Format YYYY-MM. Set to 0 to allow all symbols.
-  market_age_threshold: 2023-09
+  market_age_threshold: 2024-09
 
   max_n_panes: 8
 
@@ -141,11 +141,15 @@
     OPUSDT
     RENUSDT
     ROSEUSDT
+    RNDTUSDT
     SANDUSDT
     SKLUSDT
     SNXUSDT
     SUSHIUSDT
     SXPUSDT
+    TAOUSDT
+    TONUSDT
+    UNIUSDT
     WAVESUSDT
     WOOUSDT
     XRPUSDT
