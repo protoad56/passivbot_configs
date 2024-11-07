@@ -224,7 +224,7 @@
                 "strategy": "BigLongStrategy",
                 "tick_execution_interval_ms": 250,
                 "mode": "NORMAL",
-                "wallet_exposure_ratio": 0.3,
+                "wallet_exposure_ratio": 0.5,
                 "strategy_config": {
                     "entry_order_type": "LIMIT",
                     "cancel_orders_on_position_close": true,
@@ -241,7 +241,7 @@
                         "outer_price_timeframe": "4H",
                         "outer_price_nr_clusters": 6,
                         "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
-                        "minimum_distance_to_outer_price": 0.20,
+                        "minimum_distance_to_outer_price": 0.15,
                         "ratio_power": 0.8, //governs the quantity of each subsequent DCA order. Setting this to a higher value will bring the position price closer when a DCA is filled, at the expense of the first orders being smaller
                         "allow_add_new_smaller_dca": true,
                         //                      "outer_price_distance": 0.084,
