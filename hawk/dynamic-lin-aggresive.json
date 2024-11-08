@@ -23,7 +23,7 @@
     },
     
     "dynamic_entry": {
-        "max_positions": 8,
+        "max_positions": 10,
         "enabled": true,
         "dynamic_entry_sweep_frequency": "5m",
         "filters": [
@@ -227,7 +227,7 @@
                         "outer_price_timeframe": "4H",
                         "outer_price_nr_clusters": 10,
                         "outer_price_algo": "PEAKS_TROUGHS_HIGHLOW",
-                        "minimum_distance_to_outer_price": 0.25,
+                        "minimum_distance_to_outer_price": 0.20,
                         "ratio_power": 0.725, //governs the quantity of each subsequent DCA order. Setting this to a higher value will bring the position price closer when a DCA is filled, at the expense of the first orders being smaller
                         "allow_add_new_smaller_dca": true,
                         //                      "outer_price_distance": 0.084,
