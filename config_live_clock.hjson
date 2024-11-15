@@ -98,6 +98,15 @@
     BCHUSDT
     ENJUSDT
     OMGUSDT
+    APTUSDT
+    METISUSDT
+    SEIUSDT
+    BEAMUSDT
+    ARUSDT
+    TAOUSDT
+    ONDOUSDT
+    PENDLEUSDT
+    AXLUSDT
   ]
 
   // if approved_symbols_short is empty, all symbols are approved for shorts
