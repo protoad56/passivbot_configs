@@ -206,6 +206,9 @@
                     "sort_absolute": true,
                     "top": 30
                 }
+            },
+            {
+                "filter": "RandomizerFilter"
             }
             // {
             //     "filter": "EmaReversalFilter",
