@@ -198,6 +198,9 @@
                     "sort_absolute": true,
                     "top": 50
                 }
+            },
+            {
+                "filter": "RandomizerFilter"
             }
             // {
             //     "filter": "ATRFilter"
@@ -272,7 +275,7 @@
                 }
             },
             "short": {
-                "enabled": true,
+                "enabled": false,
                 "strategy": "BigShortStrategy",
                 "tick_execution_interval_ms": 250,
                 "mode": "NORMAL",
