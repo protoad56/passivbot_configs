@@ -16,6 +16,7 @@ create_tmux_session() {
     fi
 }
 
+
 systemctl start chrony
 systemctl enable chrony
 sleep 5
