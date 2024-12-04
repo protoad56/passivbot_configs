@@ -1,4 +1,14 @@
 
+# Function to send a Telegram message
+send_telegram_message() {
+    chat_id=$1
+    message=$2
+    token=$3
+
+    url="https://api.telegram.org/bot$token/sendMessage"
+    curl -s -X POST $url -d chat_id=$chat_id -d text="$message"
+}
+
 # Function to create a Tmux session and run a command
 create_tmux_session() {
     session_name=$1
@@ -15,6 +25,7 @@ create_tmux_session() {
         echo "Session $session_name already exists."
     fi
 }
+
 
 
 systemctl start chrony
@@ -37,15 +48,7 @@ cd /root/exchanges_dashboard2/
 docker-compose up -d
 
 
-# Function to send a Telegram message
-send_telegram_message() {
-    chat_id=$1
-    message=$2
-    token=$3
 
-    url="https://api.telegram.org/bot$token/sendMessage"
-    curl -s -X POST $url -d chat_id=$chat_id -d text="$message"
-}
 
 # Sending a message to Telegram to indicate the server has restarted and scripts are running
 send_telegram_message "6757461113" "Restart server completed and scripts are running." "6951567916:AAETarfcLbySoCkI6zYPSZj09Pu3kALmlUw"
