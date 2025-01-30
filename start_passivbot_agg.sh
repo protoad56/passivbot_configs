@@ -1,3 +1,15 @@
+#!/bin/bash
+
+# Function to send a Telegram message
+send_telegram_message() {
+    chat_id=$1
+    message=$2
+    token=$3
+
+    url="https://api.telegram.org/bot$token/sendMessage"
+    curl -s -X POST $url -d chat_id=$chat_id -d text="$message"
+}
+
 # Function to ensure the Tmux server is running
 ensure_tmux_server() {
     if ! tmux ls &>/dev/null; then
