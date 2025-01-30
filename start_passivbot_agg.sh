@@ -1,31 +1,41 @@
-
-# Function to send a Telegram message
-send_telegram_message() {
-    chat_id=$1
-    message=$2
-    token=$3
-
-    url="https://api.telegram.org/bot$token/sendMessage"
-    curl -s -X POST $url -d chat_id=$chat_id -d text="$message"
+# Function to ensure the Tmux server is running
+ensure_tmux_server() {
+    if ! tmux ls &>/dev/null; then
+        echo "No running tmux server found. Starting tmux server..."
+        tmux start-server
+        sleep 1  # Wait to ensure the server starts
+    fi
 }
 
 # Function to create a Tmux session and run a command
 create_tmux_session() {
     session_name=$1
     command_to_run=$2
+    telegram_chat_id="6757461113"
+    telegram_token="6951567916:AAETarfcLbySoCkI6zYPSZj09Pu3kALmlUw"
 
-    # Check if the session already exists, create if it doesn't
-    tmux has-session -t "$session_name" 2>/dev/null
+    # Ensure tmux server is running
+    ensure_tmux_server
 
-    if [ $? != 0 ]; then
-        tmux new-session -d -s "$session_name" "$command_to_run"
-        echo "Starting $session_name"
-        send_telegram_message "6757461113" "Starting $session_name" "6951567916:AAETarfcLbySoCkI6zYPSZj09Pu3kALmlUw"
-    else
+    # Check if the session already exists
+    if tmux has-session -t "$session_name" 2>/dev/null; then
         echo "Session $session_name already exists."
+    else
+        echo "Creating new tmux session: $session_name"
+        tmux new-session -d -s "$session_name" "$command_to_run"
+
+        sleep 1  # Wait briefly to ensure session starts
+
+        # Check if the session was successfully created
+        if tmux has-session -t "$session_name" 2>/dev/null; then
+            echo "Session $session_name started successfully."
+            send_telegram_message "$telegram_chat_id" "Starting $session_name" "$telegram_token"
+        else
+            echo "Failed to create session $session_name."
+            send_telegram_message "$telegram_chat_id" "Failed to start $session_name" "$telegram_token"
+        fi
     fi
 }
-
 
 
 systemctl start chrony
