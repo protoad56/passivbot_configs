@@ -59,7 +59,7 @@ create_tmux_session "hawk" "cd /root/hawkbot/ && source myenv/bin/activate && py
 sleep 60
 create_tmux_session "matic" "cd /root/passivbot_v7 && source venv/bin/activate && cd passivbot-rust && maturin develop --release && cd .. && python3 src/main.py ../passivbot_configs/v7/mani.json -u binance_03"
 sleep 60
-create_tmux_session "hawk_xrp_profit_tran" "cd /root/passivbot_multi/ && source myenv/bin/activate && python3 auto_profit_transfer.py binance_forager_or"
+create_tmux_session "xrp_profit_tran" "cd /root/passivbot_multi/ && source myenv/bin/activate && python3 auto_profit_transfer.py binance_forager_or"
 
 
 # #### passivbot
