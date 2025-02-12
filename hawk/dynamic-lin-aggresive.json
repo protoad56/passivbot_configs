@@ -23,7 +23,7 @@
     },
     
     "dynamic_entry": {
-        "max_positions": 10,
+        "max_positions": 5,
         "enabled": true,
         "dynamic_entry_sweep_frequency": "5m",
         "filters": [
@@ -188,7 +188,7 @@
                 "filter": "Last24hVolumeFilter",
                 "config": {
                     "sort": "desc",
-                    "top": 250
+                    "top": 150
                 }
             },
             {
@@ -196,7 +196,7 @@
                 "config": {
                     "sort": "desc",
                     "sort_absolute": true,
-                    "top": 50
+                    "top": 10
                 }
             },
             {
@@ -214,7 +214,7 @@
                 "strategy": "BigLongStrategy",
                 "tick_execution_interval_ms": 250,
                 "mode": "NORMAL",
-                "wallet_exposure_ratio": 0.4,
+                "wallet_exposure_ratio": 0.8,
                 "strategy_config": {
                     "entry_order_type": "LIMIT",
                     "cancel_orders_on_position_close": true,
