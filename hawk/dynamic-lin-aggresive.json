@@ -215,7 +215,7 @@
                 "strategy": "BigLongStrategy",
                 "tick_execution_interval_ms": 250,
                 "mode": "NORMAL",
-                "wallet_exposure_ratio": 0.8,
+                "wallet_exposure_ratio": 0.7,
                 "strategy_config": {
                     "entry_order_type": "LIMIT",
                     "cancel_orders_on_position_close": true,
