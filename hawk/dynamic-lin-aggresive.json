@@ -189,7 +189,7 @@
                 "filter": "Last24hVolumeFilter",
                 "config": {
                     "sort": "desc",
-                    "top": 150
+                    "top": 100
                 }
             },
             {
