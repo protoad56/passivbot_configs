@@ -55,7 +55,7 @@ systemctl enable chrony
 sleep 5
 create_tmux_session "forager_clock" "cd /root/passivbot_multi/ && source myenv/bin/activate && python3 forager_improved.py configs/forager/config_live_clock.hjson -gss"
 sleep 60
-create_tmux_session "hawk" "cd /root/hawkbot/ && source myenv/bin/activate && python3 trade.py -a binance_forager_or -c ../passivbot_configs/hawk/dynamic-lin-aggresive.json"
+create_tmux_session "hawk" "cd /root/hawkbot/ && source myenv/bin/activate && python3 trade.py -a binance_forager -c ../passivbot_configs/hawk/dynamic-lin-aggresive.json"
 sleep 60
 create_tmux_session "matic" "cd /root/passivbot_v7 && source venv/bin/activate && cd passivbot-rust && maturin develop --release && cd .. && python3 src/main.py ../passivbot_configs/v7/mani.json -u binance_03"
 sleep 60
