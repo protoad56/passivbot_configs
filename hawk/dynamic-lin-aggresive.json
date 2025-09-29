@@ -35,6 +35,7 @@
                     ],
                     "blacklist": [
                         "LISTAUSDT",
+                        "HIFIUSDT" ,
                         "TURBOUSDT",
                         "AAVEUSDT",
                         "AGIXUSDT",
