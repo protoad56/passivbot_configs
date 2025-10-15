@@ -194,6 +194,13 @@
                 }
             },
             {
+                "filter": "EmaReversalFilter",
+                "config": {
+                    "timeframe": "1D",
+                    "pivot": "BOTTOM"
+                }
+            },
+            {
                 "filter": "Last24hPriceChangePctFilter",
                 "config": {
                     "sort": "desc",
