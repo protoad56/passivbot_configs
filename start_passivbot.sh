@@ -33,7 +33,7 @@ systemctl enable chrony
 sleep 5
 create_tmux_session "hyper_main" "cd /root/passivbot_multi/ && source myenv/bin/activate && python3 passivbot_multi.py configs/live/hyperliquid_forager_mode_live.hjson"
 sleep 60
-create_tmux_session "doge" "cd /root/passivbot_multi/ && source myenv/bin/activate && python3 passivbot.py binance_02 DOGEUSDT ../passivbot/configs/live/clock_0days.json -lw 2.5 -lm n -sm gs"
+create_tmux_session "doge" "cd /root/passivbot_multi/ && source myenv/bin/activate && python3 passivbot.py binance_02 DOGEUSDC ../passivbot/configs/live/clock_0days.json -lw 2.5 -lm n -sm gs"
 sleep 60
 # create_tmux_session "doge_max" "cd /root/passivbot_multi/ && source myenv/bin/activate && python3 passivbot.py binance_03 INJUSDT ../passivbot_configs/clock/INJUSDT.json -lw 2.0 -sw 1.0 -lm n -sm gs"
 # sleep 60
